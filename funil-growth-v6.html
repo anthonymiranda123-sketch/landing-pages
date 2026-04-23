@@ -1,0 +1,1141 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Funil Growth v6 — Grupo Mirandas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #070709;
+  --s1: #0F0F12;
+  --s2: #161619;
+  --border: #1C1C22;
+  --border-b: #2C2C36;
+  --orange: #FF6200;
+  --orange-d: rgba(255,98,0,.12);
+  --green: #16A34A;
+  --green-d: rgba(22,163,74,.1);
+  --red: #DC2626;
+  --red-d: rgba(220,38,38,.1);
+  --blue: #2563EB;
+  --blue-d: rgba(37,99,235,.1);
+  --cyan: #0891B2;
+  --cyan-d: rgba(8,145,178,.12);
+  --yellow: #CA8A04;
+  --yellow-d: rgba(202,138,4,.1);
+  --purple: #7C3AED;
+  --purple-d: rgba(124,58,237,.1);
+  --text: #E8E8E0;
+  --text2: #7A7A85;
+  --text3: #3A3A45;
+  --font-d: 'Syne', sans-serif;
+  --font-m: 'JetBrains Mono', monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--font-m);font-size:13px;line-height:1.6;min-height:100vh;overflow-x:hidden}
+
+/* grid bg */
+body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(var(--border) 1px,transparent 1px),linear-gradient(90deg,var(--border) 1px,transparent 1px);background-size:40px 40px;opacity:.35;pointer-events:none;z-index:0}
+
+/* tabs */
+.tabs{position:sticky;top:0;z-index:100;background:rgba(7,7,9,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);display:flex;gap:0;padding:0 24px}
+.tab{padding:14px 24px;font-family:var(--font-m);font-size:12px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--text2);cursor:pointer;border-bottom:2px solid transparent;transition:all .2s;background:none;border-top:none;border-left:none;border-right:none}
+.tab.active{color:var(--orange);border-bottom-color:var(--orange)}
+.tab:hover:not(.active){color:var(--text)}
+
+/* header */
+.header{position:relative;z-index:1;padding:40px 24px 32px;max-width:1100px;margin:0 auto}
+.header-tag{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--orange);margin-bottom:12px}
+.header h1{font-family:var(--font-d);font-size:clamp(28px,4vw,48px);font-weight:800;line-height:1.1;margin-bottom:8px}
+.header h1 span{color:var(--orange)}
+.header-sub{color:var(--text2);font-size:12px;max-width:600px;margin-bottom:24px}
+.stats{display:flex;gap:24px;flex-wrap:wrap}
+.stat{background:var(--s1);border:1px solid var(--border);padding:10px 16px;border-radius:4px}
+.stat-val{font-family:var(--font-d);font-size:20px;font-weight:700;color:var(--orange)}
+.stat-lbl{font-size:10px;color:var(--text2);letter-spacing:.08em;text-transform:uppercase}
+
+/* pages */
+.page{display:none;position:relative;z-index:1}
+.page.active{display:block}
+
+/* flowchart */
+.flow{max-width:1100px;margin:0 auto;padding:0 24px 80px}
+
+/* connectors */
+.connector{display:flex;justify-content:center;align-items:center;height:40px;position:relative}
+.connector::after{content:'';position:absolute;left:50%;top:0;width:1px;height:100%;background:linear-gradient(var(--border-b),var(--border-b));transform:translateX(-50%)}
+.connector .arrow{position:relative;z-index:1;color:var(--text3);font-size:16px;background:var(--bg);padding:0 4px}
+.connector-split{display:grid;grid-template-columns:1fr 24px 1fr;gap:0;height:48px;position:relative}
+.connector-split::before{content:'';position:absolute;top:0;left:25%;width:50%;height:1px;background:var(--border-b)}
+.connector-split .l::after,.connector-split .r::after{content:'';display:block;width:1px;height:100%;background:var(--border-b);margin:0 auto}
+.connector-split .l{display:flex;justify-content:flex-end}
+.connector-split .l::after{margin-right:0;margin-left:auto}
+.connector-merge{display:grid;grid-template-columns:1fr 24px 1fr;gap:0;height:48px;position:relative}
+.connector-merge::after{content:'';position:absolute;bottom:0;left:25%;width:50%;height:1px;background:var(--border-b)}
+.connector-merge .l::after,.connector-merge .r::after{content:'';display:block;width:1px;height:100%;background:var(--border-b);margin:0 auto}
+
+/* node */
+.node{border:1px solid var(--border);border-radius:6px;background:var(--s1);overflow:hidden;cursor:pointer;transition:border-color .2s,background .2s}
+.node:hover{border-color:var(--border-b)}
+.node.expanded{border-color:var(--border-b)}
+.node-header{display:flex;align-items:center;gap:12px;padding:14px 16px}
+.node-badge{font-size:10px;letter-spacing:.1em;text-transform:uppercase;padding:3px 8px;border-radius:2px;font-weight:500;white-space:nowrap}
+.node-title{font-family:var(--font-d);font-size:15px;font-weight:700;flex:1}
+.node-kpi{font-size:11px;color:var(--text2);text-align:right;white-space:nowrap}
+.node-toggle{color:var(--text3);font-size:12px;transition:transform .2s;margin-left:8px}
+.node.expanded .node-toggle{transform:rotate(180deg)}
+.node-body{display:none;padding:0 16px 16px;border-top:1px solid var(--border)}
+.node.expanded .node-body{display:block}
+
+/* node row = 2 col */
+.node-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.node-row.triple{grid-template-columns:1fr 1fr 1fr}
+@media(max-width:680px){.node-row,.node-row.triple{grid-template-columns:1fr}}
+
+/* bridge node */
+.bridge-node{border:1px solid var(--cyan);border-radius:6px;background:linear-gradient(135deg,var(--s1),rgba(8,145,178,.05));overflow:hidden;margin:0}
+.bridge-node .node-header{background:rgba(8,145,178,.06)}
+.bridge-section{margin-top:12px}
+.bridge-section-title{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--cyan);margin-bottom:8px}
+
+/* tag chip */
+.tag{display:inline-block;font-size:10px;padding:2px 7px;border-radius:2px;margin:2px;background:var(--s2);border:1px solid var(--border-b);color:var(--text2)}
+.tag.orange{border-color:var(--orange);color:var(--orange);background:var(--orange-d)}
+.tag.green{border-color:var(--green);color:var(--green);background:var(--green-d)}
+.tag.red{border-color:var(--red);color:var(--red);background:var(--red-d)}
+.tag.blue{border-color:var(--blue);color:var(--blue);background:var(--blue-d)}
+.tag.cyan{border-color:var(--cyan);color:var(--cyan);background:var(--cyan-d)}
+.tag.yellow{border-color:var(--yellow);color:var(--yellow);background:var(--yellow-d)}
+.tag.purple{border-color:var(--purple);color:var(--purple);background:var(--purple-d)}
+
+/* table */
+.ft{width:100%;border-collapse:collapse;margin-top:8px;font-size:11px}
+.ft th{text-align:left;color:var(--text2);font-weight:400;padding:6px 8px;border-bottom:1px solid var(--border)}
+.ft td{padding:6px 8px;border-bottom:1px solid var(--border);vertical-align:top}
+.ft tr:last-child td{border-bottom:none}
+.ft td:first-child{color:var(--text2)}
+
+/* rule block */
+.rule{background:var(--s2);border:1px solid var(--border);border-radius:4px;padding:10px 12px;margin-top:8px;font-size:11px}
+.rule strong{color:var(--text)}
+
+/* alert */
+.alert{display:flex;gap:8px;align-items:flex-start;padding:8px 12px;border-radius:4px;font-size:11px;margin-top:6px}
+.alert.red{background:var(--red-d);border:1px solid rgba(220,38,38,.25);color:var(--text)}
+.alert.yellow{background:var(--yellow-d);border:1px solid rgba(202,138,4,.25);color:var(--text)}
+.alert-dot{width:6px;height:6px;border-radius:50%;margin-top:4px;flex-shrink:0}
+.alert.red .alert-dot{background:var(--red)}
+.alert.yellow .alert-dot{background:var(--yellow)}
+
+/* section label */
+.sec-label{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--text3);margin:20px 0 8px}
+
+/* WON/LOST indicators */
+.outcome-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
+.outcome{border-radius:4px;padding:10px 12px;font-size:11px}
+.outcome.won{background:var(--green-d);border:1px solid rgba(22,163,74,.3)}
+.outcome.lost{background:var(--red-d);border:1px solid rgba(220,38,38,.2)}
+.outcome-label{font-size:10px;text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px}
+.outcome.won .outcome-label{color:var(--green)}
+.outcome.lost .outcome-label{color:var(--red)}
+
+/* badge colors */
+.b-c1{background:rgba(37,99,235,.15);color:#60A5FA;border:1px solid rgba(37,99,235,.3)}
+.b-c2{background:rgba(202,138,4,.15);color:#FCD34D;border:1px solid rgba(202,138,4,.3)}
+.b-c3a{background:rgba(255,98,0,.15);color:#FF9A5C;border:1px solid rgba(255,98,0,.3)}
+.b-c3b{background:rgba(202,138,4,.15);color:#FCD34D;border:1px solid rgba(202,138,4,.3)}
+.b-ponte{background:rgba(8,145,178,.15);color:#38BDF8;border:1px solid rgba(8,145,178,.3)}
+.b-c4{background:rgba(124,58,237,.15);color:#A78BFA;border:1px solid rgba(124,58,237,.3)}
+.b-c5{background:rgba(220,38,38,.15);color:#F87171;border:1px solid rgba(220,38,38,.3)}
+.b-c6{background:rgba(22,163,74,.15);color:#4ADE80;border:1px solid rgba(22,163,74,.3)}
+
+/* cycle indicator */
+.cycle-badge{text-align:center;padding:16px;margin-top:16px;border:1px dashed var(--border-b);border-radius:4px;font-size:11px;color:var(--text2)}
+.cycle-badge strong{color:var(--orange);font-family:var(--font-d)}
+
+/* doc page */
+.doc-page{max-width:860px;margin:0 auto;padding:32px 24px 80px}
+.doc-actions{display:flex;gap:12px;margin-bottom:32px}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:10px 18px;border-radius:4px;font-family:var(--font-m);font-size:11px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;border:1px solid;transition:all .15s}
+.btn-primary{background:var(--orange);border-color:var(--orange);color:#000}
+.btn-primary:hover{background:#FF7A20}
+.btn-outline{background:transparent;border-color:var(--border-b);color:var(--text2)}
+.btn-outline:hover{border-color:var(--text2);color:var(--text)}
+
+/* markdown render */
+#md-render{font-size:13px;line-height:1.8}
+#md-render h1{font-family:var(--font-d);font-size:26px;font-weight:800;margin:32px 0 16px;color:var(--text)}
+#md-render h2{font-family:var(--font-d);font-size:18px;font-weight:700;margin:28px 0 12px;color:var(--orange);border-bottom:1px solid var(--border);padding-bottom:6px}
+#md-render h3{font-family:var(--font-d);font-size:14px;font-weight:700;margin:20px 0 8px;color:var(--text)}
+#md-render p{margin-bottom:12px;color:var(--text)}
+#md-render code{background:var(--s2);border:1px solid var(--border);padding:1px 5px;border-radius:2px;font-family:var(--font-m);font-size:11px;color:var(--cyan)}
+#md-render pre{background:var(--s2);border:1px solid var(--border);border-radius:4px;padding:16px;margin:12px 0;overflow-x:auto}
+#md-render pre code{background:none;border:none;padding:0;font-size:11px;color:var(--text)}
+#md-render ul,#md-render ol{margin:8px 0 12px 20px}
+#md-render li{margin-bottom:4px;color:var(--text)}
+#md-render table{width:100%;border-collapse:collapse;margin:12px 0;font-size:12px}
+#md-render th{background:var(--s2);text-align:left;padding:8px 12px;border:1px solid var(--border);color:var(--text2);font-weight:400;letter-spacing:.06em}
+#md-render td{padding:8px 12px;border:1px solid var(--border)}
+#md-render blockquote{border-left:3px solid var(--orange);padding-left:16px;margin:12px 0;color:var(--text2)}
+#md-render hr{border:none;border-top:1px solid var(--border);margin:24px 0}
+#md-render strong{color:var(--text);font-weight:600}
+</style>
+</head>
+<body>
+
+<div class="tabs">
+  <button class="tab active" onclick="showPage('flow',this)">Fluxograma Visual</button>
+  <button class="tab" onclick="showPage('doc',this)">Documento Completo</button>
+</div>
+
+<!-- ═══ PAGE: FLOW ═══ -->
+<div id="page-flow" class="page active">
+<div class="header">
+  <div class="header-tag">Grupo Mirandas · Growth Intelligence · 23/04/2026</div>
+  <h1>Funil Growth <span>Completo</span> v6</h1>
+  <p class="header-sub">Esteira completa C1→C6 com Lead Hub central, Pontes de Inteligência, Código 31 com predição e expansão Arremata.ai</p>
+  <div class="stats">
+    <div class="stat"><div class="stat-val">R$1B</div><div class="stat-lbl">Meta 2026</div></div>
+    <div class="stat"><div class="stat-val">100k</div><div class="stat-lbl">Famílias</div></div>
+    <div class="stat"><div class="stat-val">374k</div><div class="stat-lbl">Lead Hub</div></div>
+    <div class="stat"><div class="stat-val">6</div><div class="stat-lbl">Camadas</div></div>
+    <div class="stat"><div class="stat-val">2</div><div class="stat-lbl">Pontes</div></div>
+  </div>
+</div>
+
+<div class="flow">
+
+<!-- C1 -->
+<div class="node" onclick="toggle(this)">
+  <div class="node-header">
+    <span class="node-badge b-c1">C1</span>
+    <span class="node-title">CAPTAÇÃO</span>
+    <span class="node-kpi">Meta Ads · Clipadores · Orgânico</span>
+    <span class="node-toggle">▼</span>
+  </div>
+  <div class="node-body">
+    <div class="node-row triple">
+      <div>
+        <div class="sec-label">Meta Ads</div>
+        <div class="tag orange">CA05 SP ativo</div>
+        <div class="tag">R$/dia</div>
+        <div class="rule" style="margin-top:8px">Ralph executa criativo + copy. Carla analisa ROAS. <strong>Nunca propor budget sem perguntar.</strong> Teste = adset novo R$50/dia MAX.</div>
+      </div>
+      <div>
+        <div class="sec-label">Clipadores</div>
+        <div class="tag orange">20M+ views</div>
+        <div class="tag">Playwright/Hypex</div>
+        <div class="rule" style="margin-top:8px">Externo. NÃO é Ralph nem Neriton. Carla gerencia contratos/acesso diretamente.</div>
+      </div>
+      <div>
+        <div class="sec-label">Orgânico</div>
+        <div class="tag">IG · YT · Substack</div>
+        <div class="tag">Caleb pipeline</div>
+        <div class="rule" style="margin-top:8px">3x/semana Substack. Meta: 1M IG + 1M YT. Caleb produz, Mateus agenda.</div>
+      </div>
+    </div>
+    <div style="margin-top:12px">
+      <div class="sec-label">UTM padrão (obrigatório em tudo)</div>
+      <code>?utm_source=[julia|meta|clip|org]&utm_medium=[whatsapp|email|social]&utm_campaign=[nome]&utm_content=[criativo]&utm_term=[score_faixa]</code>
+    </div>
+  </div>
+</div>
+
+<div class="connector"><span class="arrow">↓</span></div>
+
+<!-- C2 -->
+<div class="node" onclick="toggle(this)">
+  <div class="node-header">
+    <span class="node-badge b-c2">C2</span>
+    <span class="node-title">JULIA SDR v2.2</span>
+    <span class="node-kpi">Score 0–150 · 6 perguntas · Chatfor/WhatsApp</span>
+    <span class="node-toggle">▼</span>
+  </div>
+  <div class="node-body">
+    <div class="node-row">
+      <div>
+        <div class="sec-label">Fluxo de perguntas</div>
+        <table class="ft">
+          <tr><td>P1</td><td>Abertura humanizada</td></tr>
+          <tr><td>P2</td><td>Já é aluno / conhece consórcio?</td></tr>
+          <tr><td>P3</td><td>Objetivo — qual imóvel?</td></tr>
+          <tr><td>P4</td><td>Decisor — decide sozinho?</td></tr>
+          <tr><td>P5</td><td>Bem + valor + prazo</td></tr>
+          <tr><td>P6</td><td>Capacidade financeira</td></tr>
+        </table>
+      </div>
+      <div>
+        <div class="sec-label">Tabela de score → destino</div>
+        <table class="ft">
+          <tr><th>Score</th><th>Nível</th><th>Destino</th></tr>
+          <tr><td>130–150</td><td><span class="tag orange">N7</span></td><td>Closer imediato</td></tr>
+          <tr><td>110–129</td><td><span class="tag orange">N6</span></td><td>Closer &lt;24h</td></tr>
+          <tr><td>90–109</td><td><span class="tag orange">N5</span></td><td>Closer &lt;48h</td></tr>
+          <tr><td>70–89</td><td><span class="tag orange">N4</span></td><td>Closer essa semana</td></tr>
+          <tr><td>50–69</td><td><span class="tag orange">N3</span></td><td>Closer + triagem</td></tr>
+          <tr><td>0–49</td><td><span class="tag">N0</span></td><td>→ Documentário C3B</td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="alert red" style="margin-top:12px"><div class="alert-dot"></div><strong>Gargalo #1:</strong> Julia v2.2 aguarda Chatfor implementar — task #13331 · Taiane alinha prazo</div>
+    <div class="alert red"><div class="alert-dot"></div><strong>Gargalo #4:</strong> SOURCE_ID Julia→Bitrix errado — 65% WON sem rastreamento · Neriton corrigir</div>
+  </div>
+</div>
+
+<!-- SPLIT -->
+<div class="connector-split">
+  <div class="l"></div>
+  <div></div>
+  <div class="r"></div>
+</div>
+
+<!-- C3 ROW -->
+<div class="node-row" style="gap:16px">
+
+  <!-- C3A -->
+  <div class="node" onclick="toggle(this)">
+    <div class="node-header">
+      <span class="node-badge b-c3a">C3A</span>
+      <span class="node-title">COMERCIAL</span>
+      <span class="node-kpi">Score ≥ 50</span>
+      <span class="node-toggle">▼</span>
+    </div>
+    <div class="node-body">
+      <div class="rule">Ficha Preditiva → Deal Bitrix cat 0 → Notifica Mateus → Closer via Taiane</div>
+      <div class="outcome-row">
+        <div class="outcome won">
+          <div class="outcome-label">WON ✅</div>
+          YES Consórcio R$300K+ · → C6 Arremata (upsell)
+        </div>
+        <div class="outcome lost">
+          <div class="outcome-label">LOST</div>
+          Loop Julia 3 ciclos · ciclo 2 = gancho C31
+        </div>
+      </div>
+      <div class="sec-label" style="margin-top:12px">Closers</div>
+      <div><span class="tag">Adrian 7153</span><span class="tag">Arthur 29893</span><span class="tag">via Taiane 29847</span></div>
+      <div class="rule" style="margin-top:8px"><strong>Regra:</strong> NUNCA cobrar closer direto. Sempre via Taiane.</div>
+      <div class="alert red" style="margin-top:8px"><div class="alert-dot"></div><strong>Gargalo #5:</strong> Loop Julia webhook ONCRMDEALUPDATE pendente · Neriton</div>
+    </div>
+  </div>
+
+  <!-- C3B -->
+  <div class="node" onclick="toggle(this)">
+    <div class="node-header">
+      <span class="node-badge b-c3b">C3B</span>
+      <span class="node-title">EDUCAÇÃO</span>
+      <span class="node-kpi">Score &lt; 50</span>
+      <span class="node-toggle">▼</span>
+    </div>
+    <div class="node-body">
+      <div class="rule">"Posso te ajudar a entender seu momento agora. Tenho um material gratuito..." <br>Julia <strong>enquadra</strong> como serviço educacional, não vende.</div>
+      <div class="sec-label">Link Cademi + UTM obrigatório</div>
+      <code style="font-size:10px">utm_source=julia&medium=whatsapp&campaign=doc-educacional&term=[score]</code>
+      <div class="sec-label" style="margin-top:12px">Algoritmo FUP ROI</div>
+      <div class="rule"><code>EV = conv% × ticket</code><br>FUP A1 (D+1) · A2 (D+3) · A3 (D+7)<br>Se <code>EV &lt; R$50</code> → corta automação → PONTE</div>
+      <div class="outcome-row">
+        <div class="outcome won">
+          <div class="outcome-label">CADASTROU</div>
+          Cademi EP1→EP2→EP3<br>webhook tracking por episódio
+        </div>
+        <div class="outcome lost">
+          <div class="outcome-label">CORTE</div>
+          EV abaixo do threshold → PONTE → Brevo Flow 1
+        </div>
+      </div>
+      <div class="sec-label" style="margin-top:12px">Tags geradas</div>
+      <div><span class="tag yellow">doc_enviado</span><span class="tag yellow">doc_cadastrou</span><span class="tag yellow">doc_ep1_assistiu</span><span class="tag yellow">doc_ep2_assistiu</span><span class="tag yellow">doc_ep3_assistiu</span><span class="tag yellow">doc_completou</span><span class="tag">fup_A1_enviado</span><span class="tag">fup_A2_enviado</span><span class="tag">fup_A3_enviado</span><span class="tag red">sem_resposta_corte</span></div>
+    </div>
+  </div>
+
+</div>
+
+<!-- MERGE -->
+<div class="connector-merge">
+  <div class="l"></div>
+  <div></div>
+  <div class="r"></div>
+</div>
+<div class="connector"><span class="arrow">↓</span></div>
+
+<!-- PONTE 1: LEAD HUB -->
+<div class="bridge-node node" onclick="toggle(this)">
+  <div class="node-header">
+    <span class="node-badge b-ponte">PONTE 1</span>
+    <span class="node-title">LEAD HUB · Central de Inteligência</span>
+    <span class="node-kpi">374k contatos · fonte da verdade</span>
+    <span class="node-toggle">▼</span>
+  </div>
+  <div class="node-body">
+    <div class="rule"><strong>Regra de ouro:</strong> chave = telefone normalizado (+55DDNNNNNNNNN). Lead novo → cria cadastro. Lead existente → só adiciona tag. NUNCA deletar.</div>
+
+    <div class="node-row" style="margin-top:12px">
+      <div>
+        <div class="bridge-section-title">Hierarquia de Tags (7 níveis)</div>
+        <table class="ft">
+          <tr><th>Nível</th><th>Prefixo</th><th>Exemplos</th></tr>
+          <tr><td>N1</td><td><span class="tag cyan">origem:</span></td><td>meta_ads · clipadores · organico</td></tr>
+          <tr><td>N2</td><td><span class="tag cyan">jornada:</span></td><td>julia_em_contato · closer_agendado · nutrição_brevo</td></tr>
+          <tr><td>N3</td><td><span class="tag cyan">score:</span></td><td>n7 · n6 · n5 · n4 · n3 · n0</td></tr>
+          <tr><td>N4</td><td><span class="tag cyan">acao:</span></td><td>doc_ep1_assistiu · email_clicou_consorci · c31_inscrito</td></tr>
+          <tr><td>N5</td><td><span class="tag cyan">resultado:</span></td><td>won_consorciado · lost_preco · lost_prazo · descadastrou</td></tr>
+          <tr><td>N6</td><td><span class="tag cyan">c31_</span></td><td>c31_total(0-3) · c31_ev{N}_data · c31_status · c31_score_pred</td></tr>
+          <tr><td>N7</td><td><span class="tag cyan">arr_</span></td><td>arr_trial · arr_gold · arr_ativo · arr_inativo · arr_churn</td></tr>
+        </table>
+      </div>
+      <div>
+        <div class="bridge-section-title">Permissões</div>
+        <table class="ft">
+          <tr><th>Ator</th><th>INSERT</th><th>UPDATE tags</th><th>DELETE</th></tr>
+          <tr><td>Julia</td><td><span class="tag green">✅</span></td><td><span class="tag green">✅</span></td><td><span class="tag red">❌</span></td></tr>
+          <tr><td>Brevo webhook</td><td><span class="tag red">❌</span></td><td><span class="tag green">✅</span></td><td><span class="tag red">❌</span></td></tr>
+          <tr><td>Cademi webhook</td><td><span class="tag red">❌</span></td><td><span class="tag green">✅</span></td><td><span class="tag red">❌</span></td></tr>
+          <tr><td>Admin (Anthony/Carla)</td><td><span class="tag green">✅</span></td><td><span class="tag green">✅</span></td><td><span class="tag green">✅</span></td></tr>
+        </table>
+        <div class="bridge-section-title" style="margin-top:12px">Campos C31 (Neriton implementa)</div>
+        <div><span class="tag cyan">c31_elegivel</span><span class="tag cyan">c31_eventos_total</span><span class="tag cyan">c31_ev1/2/3_data</span><span class="tag cyan">c31_status</span><span class="tag cyan">c31_score_pred</span><span class="tag cyan">dias_na_base</span></div>
+        <div class="bridge-section-title" style="margin-top:8px">Campos Arremata</div>
+        <div><span class="tag cyan">arr_trial_iniciou</span><span class="tag cyan">arr_gold_ativo</span><span class="tag cyan">arr_email_D{N}_clicou</span><span class="tag cyan">arr_churn</span></div>
+      </div>
+    </div>
+    <div class="alert red" style="margin-top:12px"><div class="alert-dot"></div><strong>Gargalo #3:</strong> Ponte Lead Hub→Brevo webhook não existe · Neriton implementar</div>
+    <div class="alert red"><div class="alert-dot"></div><strong>Gargalo #4:</strong> Campos C31+Arremata no Lead Hub schema · Neriton</div>
+  </div>
+</div>
+
+<div class="connector"><span class="arrow">↓</span></div>
+
+<!-- PONTE 2: LH → BREVO -->
+<div class="bridge-node node" onclick="toggle(this)">
+  <div class="node-header">
+    <span class="node-badge b-ponte">PONTE 2</span>
+    <span class="node-title">LEAD HUB → BREVO · Push Automático por Tag</span>
+    <span class="node-kpi">webhook · updateEnabled:true · nunca duplica</span>
+    <span class="node-toggle">▼</span>
+  </div>
+  <div class="node-body">
+    <div class="rule">Toda tag adicionada no Lead Hub dispara webhook interno → motor de roteamento → Brevo API. Brevo <strong>nunca é alimentado por humano</strong>.</div>
+    <table class="ft" style="margin-top:12px">
+      <tr><th>Tag Lead Hub</th><th>Brevo: Lista → Flow disparado</th></tr>
+      <tr><td><span class="tag">nutrição_brevo + score:n0</span></td><td><span class="tag purple">Lista 10</span> Flow 1: Reengajamento leve · 3 emails · 30d</td></tr>
+      <tr><td><span class="tag yellow">acao:doc_cadastrou</span></td><td><span class="tag purple">Lista 11</span> Flow 2: Cademi Onboarding · EP1→EP2→EP3</td></tr>
+      <tr><td><span class="tag yellow">acao:doc_completou</span></td><td><span class="tag purple">Lista 12</span> Flow 3: Requalificação → Julia retoma</td></tr>
+      <tr><td><span class="tag red">resultado:lost_closer</span></td><td><span class="tag purple">Lista 13</span> Flow 4: Aquecimento 90d → gancho C31</td></tr>
+      <tr><td><span class="tag green">resultado:won_consorciado</span></td><td><span class="tag purple">Lista 14</span> Flow 5: Onboarding CS + upsell Arremata</td></tr>
+      <tr><td><span class="tag">sem_resposta_7d + fup_A3</span></td><td><span class="tag purple">Lista 15</span> Flow 6: Passivo longo prazo · 1/mês · 6 meses</td></tr>
+    </table>
+    <div class="sec-label" style="margin-top:12px">Retorno Brevo → Lead Hub (tags de comportamento)</div>
+    <table class="ft">
+      <tr><td>email.opened</td><td>→ <span class="tag">acao:email_abriu</span></td></tr>
+      <tr><td>click em link consórcio</td><td>→ <span class="tag orange">acao:email_clicou_consorci</span> → Julia retoma</td></tr>
+      <tr><td>click em link C31</td><td>→ <span class="tag orange">acao:c31_interesse</span> → entrada C5</td></tr>
+      <tr><td>unsubscribed</td><td>→ <span class="tag red">resultado:descadastrou</span></td></tr>
+    </table>
+    <div class="alert red" style="margin-top:8px"><div class="alert-dot"></div><strong>Gargalo #2:</strong> Brevo: 0 automações ativas · Ralph #13537 · 6 flows + 7 emails Arremata</div>
+  </div>
+</div>
+
+<div class="connector"><span class="arrow">↓</span></div>
+
+<!-- C4 -->
+<div class="node" onclick="toggle(this)">
+  <div class="node-header">
+    <span class="node-badge b-c4">C4</span>
+    <span class="node-title">NUTRIÇÃO BREVO</span>
+    <span class="node-kpi">6 flows · ativados por tag do Lead Hub</span>
+    <span class="node-toggle">▼</span>
+  </div>
+  <div class="node-body">
+    <table class="ft">
+      <tr><th>Flow</th><th>Trigger</th><th>Conteúdo</th><th>Saída</th></tr>
+      <tr><td><span class="tag purple">F1</span></td><td>nutrição+n0</td><td>Reengajamento leve · 3 emails · 30d</td><td>Clicou cons → Julia</td></tr>
+      <tr><td><span class="tag purple">F2</span></td><td>doc_cadastrou</td><td>Cademi Onboarding · acompanha EPs</td><td>EP3 assistiu → F3</td></tr>
+      <tr><td><span class="tag purple">F3</span></td><td>doc_completou</td><td>Requalificação · 3 emails</td><td>Respondeu → Julia · Ignorou → F6</td></tr>
+      <tr><td><span class="tag purple">F4</span></td><td>lost_closer</td><td>Aquecimento 90d · valor · D+60 gancho C31</td><td>D+90 Julia última tentativa</td></tr>
+      <tr><td><span class="tag purple">F5</span></td><td>won_consorciado</td><td>Onboarding CS · NPS · D+30 upsell Arremata</td><td>Churn prevention</td></tr>
+      <tr><td><span class="tag purple">F6</span></td><td>sem_resposta 7d+fup3</td><td>Passivo · 1/mês · 6 meses · só valor</td><td>Clicou → reativa F1</td></tr>
+    </table>
+    <div class="rule" style="margin-top:8px">Todo email com UTM obrigatório. Click "Código 31" em qualquer flow → <span class="tag orange">c31_interesse</span> → entrada automática C5.</div>
+  </div>
+</div>
+
+<div class="connector"><span class="arrow">↓</span></div>
+
+<!-- C5 -->
+<div class="node" onclick="toggle(this)">
+  <div class="node-header">
+    <span class="node-badge b-c5">C5</span>
+    <span class="node-title">CÓDIGO 31</span>
+    <span class="node-kpi">Cap 3 eventos · Elegibilidade + Predição · Último terça do mês</span>
+    <span class="node-toggle">▼</span>
+  </div>
+  <div class="node-body">
+    <div class="node-row">
+      <div>
+        <div class="sec-label">Entradas</div>
+        <div><span class="tag orange">acao:c31_interesse (Brevo flows)</span></div>
+        <div><span class="tag">Loop Julia ciclo 2</span></div>
+        <div><span class="tag">Listas próprias: GOLD · Legacy · Órfãos · Base 90d</span></div>
+
+        <div class="sec-label" style="margin-top:12px">Filtro Elegibilidade (Lead Hub calcula)</div>
+        <table class="ft">
+          <tr><th>Condição</th><th>Status</th></tr>
+          <tr><td>score ≥ n3 OU doc_completou</td><td><span class="tag green">✅ elegível</span></td></tr>
+          <tr><td>lost_preco OU lost_prazo</td><td><span class="tag green">✅ elegível</span></td></tr>
+          <tr><td>email_clicou_consorci</td><td><span class="tag green">✅ elegível</span></td></tr>
+          <tr><td>sem_resposta_puro OU descadastrou</td><td><span class="tag red">❌ bloqueado</span></td></tr>
+          <tr><td>c31_total ≥ 3</td><td><span class="tag red">❌ manual only</span></td></tr>
+        </table>
+      </div>
+      <div>
+        <div class="sec-label">Regra do Cap (3 eventos)</div>
+        <table class="ft">
+          <tr><th>Evento</th><th>Automação</th></tr>
+          <tr><td>C31 #1</td><td>Convite automático · Atração→Captação→Conversão live</td></tr>
+          <tr><td>C31 #2</td><td>Mês seguinte · automático · c31_total=2</td></tr>
+          <tr><td>C31 #3</td><td>"Última oportunidade neste formato"</td></tr>
+          <tr><td>C31 #4+</td><td>⛔ PARA · fila manual Taiane · dado novo?</td></tr>
+        </table>
+
+        <div class="sec-label" style="margin-top:12px">Score Preditivo C31 (Fase 2)</div>
+        <div class="rule" style="font-size:11px">
+          score_julia ≥ n4 <strong>+30</strong> · doc_completou <strong>+20</strong> · email_clicou <strong>+15</strong> · closer_agendado <strong>+15</strong> · lost_preco/prazo <strong>+10</strong><br>
+          c31_total=2 <strong>-20</strong> · sem_resposta <strong>-15</strong> · base>180d sem ação <strong>-10</strong><br><br>
+          ≥60 → auto · 40-59 → nurture+convite · &lt;40 → manual
+        </div>
+      </div>
+    </div>
+
+    <div class="node-row" style="margin-top:12px">
+      <div>
+        <div class="sec-label">Fase 1 (agora → 90d) · Coleta</div>
+        <div class="rule">Passa TODA a base elegível pelos eventos sem discriminar. Acumular dados reais: score Julia, flows recebidos, doc assistido, evento N que comprou. Meta: 500+ WON com histórico completo.</div>
+      </div>
+      <div>
+        <div class="sec-label">Fase 2 (após 500+ WON) · Predição</div>
+        <div class="rule">Lead Hub calcula score preditivo 0-100 para cada lead antes de enviar convite. Cirúrgico por comportamento acumulado.</div>
+      </div>
+    </div>
+
+    <div class="outcome-row">
+      <div class="outcome won">
+        <div class="outcome-label">WON ✅</div>
+        YES Consórcio R$300K+ → C6 Arremata
+      </div>
+      <div class="outcome lost">
+        <div class="outcome-label">LOST</div>
+        c31_total++ · Flow 4 novo ciclo 60d · c31_total=3 → manual_only
+      </div>
+    </div>
+
+    <div class="sec-label" style="margin-top:12px">Responsáveis</div>
+    <div><span class="tag">Ralph — execução operacional</span><span class="tag orange">Anthony · Mariah · Cintia · Mateus F. — vendas</span></div>
+  </div>
+</div>
+
+<div class="connector"><span class="arrow">↓</span></div>
+
+<!-- C6 -->
+<div class="node" onclick="toggle(this)">
+  <div class="node-header">
+    <span class="node-badge b-c6">C6</span>
+    <span class="node-title">EXPANSÃO ARREMATA.AI</span>
+    <span class="node-kpi">MRR R$6.986 · Churn 35% → meta &lt;20% · 330 GOLD ativos</span>
+    <span class="node-toggle">▼</span>
+  </div>
+  <div class="node-body">
+    <div class="sec-label">3 portas de entrada</div>
+    <div class="node-row triple">
+      <div>
+        <div class="rule"><strong style="color:var(--green)">Porta 1</strong> — WON Consórcio<br>Flow 5 · D+30<br>"seu consórcio está aprovado. onde vai comprar?"<br><span class="tag green">won_consorciado → arr_oferta_enviada</span></div>
+      </div>
+      <div>
+        <div class="rule"><strong style="color:var(--yellow)">Porta 2</strong> — Doc Completou<br>Flow 3 requalificação falhou<br>"não tem consórcio? veja os imóveis disponíveis"<br><span class="tag yellow">doc_completou+lost_closer → arr_oferta_enviada</span></div>
+      </div>
+      <div>
+        <div class="rule"><strong style="color:var(--orange)">Porta 3</strong> — C31 cap atingido<br>manual_only · Taiane decide<br>"enquanto organiza o financeiro, plataforma"<br><span class="tag orange">c31_cap_atingido → arr_oferta_manual</span></div>
+      </div>
+    </div>
+
+    <div class="sec-label" style="margin-top:16px">Onboarding 7 emails (Ralph cria · Neriton via Guru→Brevo)</div>
+    <table class="ft">
+      <tr><th>Dia</th><th>Assunto / Objetivo</th><th>Tag gerada</th></tr>
+      <tr><td>D+1</td><td>"Bem-vindo — veja o primeiro imóvel disponível hoje"</td><td><span class="tag cyan">arr_email_D1_clicou</span></td></tr>
+      <tr><td>D+3</td><td>"Como funciona o leilão passo a passo" — educação</td><td><span class="tag cyan">arr_email_D3_clicou</span></td></tr>
+      <tr><td>D+7</td><td>"3 imóveis que poderiam ser seus" — prova de oportunidade</td><td><span class="tag cyan">arr_email_D7_clicou</span></td></tr>
+      <tr><td>D+14</td><td>"Sua busca salva te economiza 2h/semana" — feature</td><td><span class="tag cyan">arr_email_D14_clicou</span></td></tr>
+      <tr><td>D+21</td><td>"Resultado de quem arrematou no mês passado" — prova social</td><td><span class="tag cyan">arr_email_D21_clicou</span></td></tr>
+      <tr><td>D+30</td><td>"Oferta GOLD — acesso completo + alertas + suporte" — conversão</td><td><span class="tag orange">arr_gold_oferta</span></td></tr>
+      <tr><td>D+60</td><td>"Você ainda está olhando ou já decidiu?" — urgência real</td><td><span class="tag cyan">arr_email_D60_clicou</span></td></tr>
+    </table>
+
+    <div class="node-row" style="margin-top:16px">
+      <div>
+        <div class="sec-label">GOLD Ativo — Engajamento</div>
+        <div><span class="tag cyan">arr_buscou_imovel</span><span class="tag cyan">arr_salvou_alerta</span><span class="tag cyan">arr_acessou_7d</span><span class="tag cyan">arr_acessou_30d</span></div>
+        <div class="rule" style="margin-top:8px"><strong>Upsell Parceiro Arrematador:</strong> GOLD + buscou>5 + salvou_alerta → "quer ajuda pra dar o lance na hora certa? nosso concierge te acompanha"</div>
+      </div>
+      <div>
+        <div class="sec-label">Churn Prevention</div>
+        <table class="ft">
+          <tr><td>Inativo 7d</td><td>Email reativação</td></tr>
+          <tr><td>Inativo 15d</td><td>Arara WA</td></tr>
+          <tr><td>Inativo 30d</td><td>Julia retoma "precisa de ajuda pra achar o imóvel certo?"</td></tr>
+          <tr><td>Inativo 45d</td><td><span class="tag red">arr_churn</span> → Lead Hub → Brevo Flow 6</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="alert yellow" style="margin-top:12px"><div class="alert-dot"></div><strong>Gargalo #9:</strong> Onboarding Arremata D+1 a D+60 ausente · Ralph cria 7 emails · Neriton Guru→Brevo</div>
+  </div>
+</div>
+
+<!-- CYCLE -->
+<div class="cycle-badge">
+  <strong>O CICLO FECHA</strong><br>
+  <span style="color:var(--text2)">GOLD ativo sem consórcio → Julia retoma consórcio · GOLD churned → Brevo F6 + C31 reentrada · Indicação de GOLD → entrada C1 com </span><span class="tag green">origem:indicacao</span><br><br>
+  <strong style="color:var(--text2)">Consórcio encontra imóvel no Arremata → Arremata é pago pelo Consórcio → família no imóvel</strong>
+</div>
+
+<!-- GARGALOS -->
+<div class="sec-label" style="margin-top:32px;font-size:12px">GARGALOS CRÍTICOS · ORDEM DE IMPACTO</div>
+<div>
+  <div class="alert red"><div class="alert-dot"></div><strong>#1</strong> Julia v2.2 → Chatfor implementar · task #13331 · Taiane alinha prazo</div>
+  <div class="alert red"><div class="alert-dot"></div><strong>#2</strong> Brevo: 0 automações (6 flows + 7 emails Arremata) · Ralph #13537</div>
+  <div class="alert red"><div class="alert-dot"></div><strong>#3</strong> Ponte Lead Hub→Brevo: webhook não existe · Neriton</div>
+  <div class="alert red"><div class="alert-dot"></div><strong>#4</strong> Campos C31+Arremata no Lead Hub schema · Neriton</div>
+  <div class="alert red"><div class="alert-dot"></div><strong>#5</strong> SOURCE_ID Julia→Bitrix: 65% WON sem rastreio · Neriton</div>
+  <div class="alert red"><div class="alert-dot"></div><strong>#6</strong> Guru→Lead Hub webhook (arr_trial_ativou) · Neriton</div>
+  <div class="alert yellow"><div class="alert-dot"></div><strong>#7</strong> Loop Julia: ONCRMDEALUPDATE pendente · Neriton</div>
+  <div class="alert yellow"><div class="alert-dot"></div><strong>#8</strong> UTMs Ralph: todas campanhas padronizadas · Ralph</div>
+  <div class="alert yellow"><div class="alert-dot"></div><strong>#9</strong> Arremata churn 35%: onboarding ausente · Ralph + Neriton</div>
+</div>
+
+</div><!-- /flow -->
+</div><!-- /page-flow -->
+
+<!-- ═══ PAGE: DOC ═══ -->
+<div id="page-doc" class="page">
+<div class="doc-page">
+  <div class="doc-actions">
+    <button class="btn btn-primary" onclick="downloadMD()">↓ Download .md</button>
+    <button class="btn btn-outline" onclick="copyMD()">⎘ Copiar markdown</button>
+  </div>
+  <div id="md-render"></div>
+</div>
+</div>
+
+<textarea id="md-source" style="display:none">
+# Funil Growth Completo v6 — Grupo Mirandas
+**Data:** 23/04/2026 | **Versão:** 6.0 | **Autora:** Carla (COO IA)
+
+> "O bilhão não é meu. É das 100.000 famílias. Eu só executo." — Anthony Miranda
+
+---
+
+## Sumário
+
+1. [Visão Geral](#visao-geral)
+2. [C1 · Captação](#c1)
+3. [C2 · Julia SDR v2.2](#c2)
+4. [C3A · Comercial](#c3a)
+5. [C3B · Educação + FUP ROI](#c3b)
+6. [Ponte 1 · Lead Hub Central de Inteligência](#ponte1)
+7. [Ponte 2 · Lead Hub → Brevo](#ponte2)
+8. [C4 · Nutrição Brevo](#c4)
+9. [C5 · Código 31 — Elegibilidade + Cap 3 + Predição](#c5)
+10. [C6 · Expansão Arremata.ai](#c6)
+11. [O Ciclo Fecha](#ciclo)
+12. [Responsáveis por Camada](#responsaveis)
+13. [Gargalos Críticos](#gargalos)
+14. [Próximos Passos](#proximos)
+
+---
+
+## Visão Geral {#visao-geral}
+
+```
+C1 CAPTAÇÃO → C2 JULIA SDR → C3A COMERCIAL / C3B EDUCAÇÃO
+   → PONTE 1 (Lead Hub) → PONTE 2 (LH→Brevo)
+   → C4 NUTRIÇÃO BREVO → C5 CÓDIGO 31 → C6 ARREMATA.AI → ↺
+```
+
+**Missão:** R$1 bilhão em consórcio em 2026 · 100.000 famílias no primeiro imóvel.
+
+**Princípio central:** Lead Hub é o núcleo de inteligência. Todo evento da jornada do lead vira uma tag imutável. As automações leem essas tags e agem. Nenhum humano alimenta o Brevo diretamente — só via Lead Hub.
+
+---
+
+## C1 · Captação {#c1}
+
+### Canais ativos
+
+| Canal | Responsável | Status | Nota |
+|-------|-------------|--------|------|
+| Meta Ads CA05 SP | Ralph (execução) + Carla (análise) | ✅ Ativo | R$/dia · confirmar antes de escalar |
+| Clipadores | Externo (Playwright/Hypex) | ✅ 20M+ views | NÃO é Ralph nem Neriton |
+| Orgânico IG/YT/Substack | Caleb pipeline | ✅ Ativo | Meta: 1M IG + 1M YT |
+
+### UTM padrão (obrigatório em tudo)
+```
+?utm_source=[julia|meta|clip|org]
+&utm_medium=[whatsapp|email|social]
+&utm_campaign=[nome]
+&utm_content=[criativo]
+&utm_term=[score_faixa]
+```
+
+**Regra Meta Ads:** NUNCA propor budget sem perguntar. Teste = adset novo R$50/dia MAX. Nunca subir teste em adset de escala. Contas: Yes `act_1156743682306754` | Anthony `act_663271449065418`.
+
+---
+
+## C2 · Julia SDR v2.2 {#c2}
+
+**Plataforma:** Chatfor / WhatsApp
+**Sistema:** Score 0–150 por 6 perguntas humanizadas
+
+### Fluxo de perguntas
+- P1: Abertura humanizada
+- P2: Já é aluno / conhece consórcio?
+- P3: Objetivo — qual imóvel?
+- P4: Decisor — decide sozinho?
+- P5: Bem + valor + prazo
+- P6: Capacidade financeira
+
+### Tabela de score
+
+| Score | Nível | Destino |
+|-------|-------|---------|
+| 130–150 | N7 | Closer imediato — Mateus + Taiane notificados |
+| 110–129 | N6 | Closer < 24h |
+| 90–109 | N5 | Closer < 48h |
+| 70–89 | N4 | Closer essa semana |
+| 50–69 | N3 | Closer — Mateus faz mini-triagem |
+| 0–49 | N0 | → C3B Documentário |
+
+**Score ≥ 50 = 97% das vendas · R$81M historicamente.**
+
+---
+
+## C3A · Comercial {#c3a}
+
+**Trigger:** Score ≥ 50
+
+1. Ficha Preditiva → Deal Bitrix cat 0
+2. Notifica Mateus (36137)
+3. Closer via Taiane (29847)
+
+**WON →** YES Consórcio R$300K+ → entra C6 (upsell Arremata)
+**LOST →** Loop Julia (3 ciclos) · ciclo 2 = gancho C31
+
+**Regra de ouro:** NUNCA cobrar closer direto. Sempre via Taiane.
+Closers: Adrian (7153) · Arthur (29893)
+
+---
+
+## C3B · Educação + FUP ROI {#c3b}
+
+**Trigger:** Score < 50
+
+Julia enquadra como **serviço educacional** (não vende):
+> "Posso te ajudar a entender exatamente qual o seu momento agora. Tenho um material gratuito que outras pessoas usaram pra sair do aluguel sem saber por onde começar — posso te enviar?"
+
+**Link Cademi + UTM:**
+```
+utm_source=julia&utm_medium=whatsapp&utm_campaign=doc-educacional&utm_term=[score_faixa]
+```
+
+### Algoritmo FUP ROI
+```
+EV = conv% × ticket
+```
+- FUP A1 (D+1): resposta? → EV ≥ R$50?
+- FUP A2 (D+3): sem resposta? → EV ainda OK?
+- FUP A3 (D+7): último esforço
+- **Corte:** EV < R$50 → automação para → PONTE → Brevo F1
+
+### Tags geradas (C3B)
+`doc_enviado` · `doc_cadastrou` · `doc_ep1_assistiu` · `doc_ep2_assistiu` · `doc_ep3_assistiu` · `doc_completou` · `fup_A1_enviado` · `fup_A2_enviado` · `fup_A3_enviado` · `sem_resposta_corte`
+
+---
+
+## Ponte 1 · Lead Hub Central de Inteligência {#ponte1}
+
+**URL:** https://leadhub-rho.vercel.app
+**API Key (Carla):** `lh_42686d2bb01d00d9271236249646c508de8f303df79a351e`
+**Contatos:** 374k+
+
+### Regra de identificação
+**Chave = telefone normalizado (+55DDNNNNNNNNN).** Nunca nome.
+- Lead novo → cria cadastro + tag_inicial + UTM source
+- Lead existente → só adiciona tag nova · histórico intacto · NUNCA DELETE
+
+### Hierarquia de Tags (7 níveis)
+
+| Nível | Prefixo | Exemplos |
+|-------|---------|----------|
+| N1 | `origem:` | meta_ads · clipadores · organico · indicacao |
+| N2 | `jornada:` | julia_em_contato · closer_agendado · nutrição_brevo · cliente_ativo |
+| N3 | `score:` | n7 · n6 · n5 · n4 · n3 · n0 |
+| N4 | `acao:` | doc_ep1/2/3_assistiu · email_clicou_consorci · c31_inscrito · fup_enviado |
+| N5 | `resultado:` | won_consorciado · lost_preco · lost_prazo · sem_resposta · requalificavel |
+| N6 | `c31_` | c31_total(0-3) · c31_ev{N}_data · c31_status · c31_score_pred · c31_elegivel |
+| N7 | `arr_` | arr_trial · arr_gold_ativo · arr_inativo · arr_churn · arr_email_D{N}_clicou |
+
+### Permissões
+
+| Ator | INSERT | UPDATE tags | DELETE |
+|------|--------|-------------|--------|
+| Julia (Chatfor) | ✅ | ✅ | ❌ |
+| Brevo webhook | ❌ | ✅ | ❌ |
+| Cademi webhook | ❌ | ✅ | ❌ |
+| Admin (Anthony/Carla/Edwards) | ✅ | ✅ | ✅ |
+
+### Campos novos a implementar (Neriton)
+**C31:** `c31_elegivel` · `c31_eventos_total` · `c31_ev1/2/3_data` · `c31_ev1/2/3_comprou` · `c31_status` (enum: elegivel|em_ciclo|cap_atingido|manual_only|won) · `c31_score_pred` · `dias_na_base` · `tempo_ate_won`
+
+**Arremata:** `arr_trial_iniciou` · `arr_trial_ativou` · `arr_gold_ativo` · `arr_buscou_imovel` · `arr_salvou_alerta` · `arr_acessou_7d` · `arr_acessou_30d` · `arr_churn`
+
+---
+
+## Ponte 2 · Lead Hub → Brevo {#ponte2}
+
+### Como funciona
+1. Tag adicionada no Lead Hub
+2. Webhook interno dispara: `event: contact.tag_added`
+3. Motor de roteamento cruza tag com tabela
+4. Chama Brevo API: `POST /v3/contacts` com `updateEnabled: true`
+5. Brevo coloca na lista correta → automação inicia
+
+**Regra:** Brevo NUNCA é alimentado por humano. Só via Lead Hub.
+
+### Mapa de roteamento
+
+| Tag Lead Hub | → Brevo Lista | Flow disparado |
+|--------------|---------------|----------------|
+| nutrição_brevo + score:n0 | Lista 10 | Flow 1: Reengajamento leve · 3 emails · 30d |
+| acao:doc_cadastrou | Lista 11 | Flow 2: Cademi Onboarding · EP1→EP2→EP3 |
+| acao:doc_completou | Lista 12 | Flow 3: Requalificação → Julia retoma |
+| resultado:lost_closer | Lista 13 | Flow 4: Aquecimento 90d → gancho C31 |
+| resultado:won_consorciado | Lista 14 | Flow 5: Onboarding CS + upsell Arremata |
+| sem_resposta_7d + fup_A3 | Lista 15 | Flow 6: Passivo longo prazo · 1/mês · 6 meses |
+
+### Retorno Brevo → Lead Hub
+
+| Evento Brevo | Tag adicionada no Lead Hub |
+|--------------|---------------------------|
+| email.opened | `acao:email_abriu` |
+| click em link consórcio | `acao:email_clicou_consorci` → Julia retoma |
+| click em link C31 | `acao:c31_interesse` → entrada C5 |
+| unsubscribed | `resultado:descadastrou` |
+| automation.step_X | `acao:flow[N]_step[X]_concluido` |
+
+---
+
+## C4 · Nutrição Brevo {#c4}
+
+**Brevo API Key:** `xkeysib-db20f0020907718f304c3c257535407274bb4f390a995ac9b29f392612acc9a9`
+
+| Flow | Trigger (tag) | Conteúdo | Saída |
+|------|--------------|----------|-------|
+| F1 | nutrição_brevo + n0 | Reengajamento leve · 3 emails · 30d | Clicou cons → Julia · sem ação → F6 |
+| F2 | doc_cadastrou | Cademi Onboarding · acompanha EP1→EP3 | EP3 assistiu → F3 · sumiu → F1 |
+| F3 | doc_completou | Requalificação · 3 emails | Respondeu → Julia · ignorou → F6 |
+| F4 | lost_closer | Aquecimento 90d · 1 email/2sem · valor | D+60: gancho C31 · D+90: Julia |
+| F5 | won_consorciado | Onboarding CS · NPS · upsell | D+30: oferta Arremata · churn prevention |
+| F6 | sem_resposta_7d + fup_A3 | Passivo · 1/mês · 6 meses · só valor | Clicou → reativa F1 |
+
+**Todo email:** UTM obrigatório. Click "Código 31" em qualquer flow → `acao:c31_interesse` → C5.
+
+---
+
+## C5 · Código 31 — Elegibilidade + Cap 3 + Predição {#c5}
+
+**Evento:** último terça de cada mês · Próximo: 29/04/2026
+**Responsáveis vendas:** Anthony · Mariah · Cintia · Mateus Fuentes
+**Execução operacional:** Ralph
+
+### Entradas
+- Brevo flows (tag `acao:c31_interesse`)
+- Loop Julia ciclo 2 (gancho direto)
+- Listas próprias: GOLD · Legacy · Órfãos · Base 90d
+
+### Filtro de Elegibilidade
+
+**Elegível (qualquer uma):**
+- score ≥ n3 OU doc_completou
+- lost_preco OU lost_prazo (objeção objetiva)
+- email_clicou_consorci (interesse ativo demonstrado)
+- closer_agendado (chegou no closer)
+
+**Bloqueado:**
+- sem_resposta_puro (sumiu — sem dado de objeção)
+- resultado:descadastrou
+- c31_total ≥ 3 (cap atingido → manual_only)
+
+### Regra do Cap (3 eventos automáticos)
+
+| Evento | Ação |
+|--------|------|
+| C31 #1 | Convite automático · Atração → Captação → Conversão live |
+| C31 #2 | Mês seguinte · convite automático · c31_total = 2 |
+| C31 #3 | Último automático · "última oportunidade neste formato" |
+| C31 #4+ | ⛔ AUTOMAÇÃO PARA · fila manual Taiane · só com dado novo |
+
+### Score Preditivo C31 (Fase 2 — após 500+ WON)
+
+| Variável | Peso |
+|----------|------|
+| score_julia ≥ n4 | +30 |
+| doc_completou = true | +20 |
+| email_clicou_consorci = true | +15 |
+| closer_agendado = true | +15 |
+| lost_preco OU lost_prazo | +10 |
+| origem = meta_ads | +5 |
+| c31_total = 2 | -20 |
+| sem_resposta_7d = true | -15 |
+| tempo_base > 180d sem ação | -10 |
+
+**Decisão:**
+- Score ≥ 60 → convite automático
+- Score 40–59 → nurture extra antes (1 email aquecimento) + convite
+- Score < 40 → não convida · Taiane decide manualmente
+
+### Fases de implementação
+
+**Fase 1 (agora → 90 dias) · Coleta cega**
+Objetivo: passar toda a base elegível pelos eventos sem discriminar. Acumular dados reais de comportamento. Para cada WON e LOST registrar: score Julia, flows Brevo recebidos, EP Cademi assistido, eventos C31 necessários, origem, tempo total na base.
+
+**Fase 2 (após 500+ WON com histórico completo)**
+Lead Hub calcula score preditivo 0-100 antes de cada convite. Critério: dado acumulado real, não chute.
+
+---
+
+## C6 · Expansão Arremata.ai {#c6}
+
+**URL:** arremata.ai
+**MRR atual:** R$6.986 · **Churn:** 35% → **meta:** < 20%
+**GOLD ativos:** 330 · **Lista Brevo:** 179k
+
+### 3 portas de entrada
+
+**Porta 1 — WON Consórcio (mais quente)**
+- Flow 5 Brevo · D+30 após WON
+- Ângulo: "seu consórcio está aprovado. enquanto aguarda a contemplação, já sabe onde vai comprar?"
+- Tag: `won_consorciado → arr_oferta_enviada`
+
+**Porta 2 — Doc Completou (educado, sem $$ agora)**
+- Flow 3 requalificação falhou → oferta Arremata trial
+- Ângulo: "não tem consórcio ainda? começa vendo os imóveis disponíveis"
+- Tag: `doc_completou + lost_closer → arr_oferta_enviada`
+
+**Porta 3 — C31 cap atingido (manual)**
+- Taiane decide · ângulo: "enquanto organiza o financeiro, plataforma"
+- Tag: `c31_cap_atingido → arr_oferta_manual`
+
+### Onboarding 7 emails (Ralph cria · Neriton via Guru→Brevo)
+
+| Dia | Assunto | Objetivo |
+|-----|---------|----------|
+| D+1 | "Bem-vindo — veja o primeiro imóvel disponível hoje" | Ativação imediata |
+| D+3 | "Como funciona o leilão passo a passo" | Educação |
+| D+7 | "3 imóveis que poderiam ser seus" | Prova de oportunidade |
+| D+14 | "Sua busca salva te economiza 2h/semana" | Adoção de feature |
+| D+21 | "Resultado de quem arrematou no mês passado" | Prova social |
+| D+30 | "Oferta GOLD — acesso completo + alertas + suporte" | Conversão principal |
+| D+60 | "Você ainda está olhando ou já decidiu?" | Urgência real |
+
+### Engajamento GOLD (tracking)
+Tags: `arr_buscou_imovel` · `arr_salvou_alerta` · `arr_acessou_7d` · `arr_acessou_30d`
+
+**Upsell Parceiro Arrematador:** GOLD + buscou > 5 + salvou_alerta → "quer ajuda pra dar o lance na hora certa? nosso concierge te acompanha"
+
+### Churn Prevention
+
+| Inatividade | Ação |
+|-------------|------|
+| 7 dias | Email reativação |
+| 15 dias | Arara WhatsApp |
+| 30 dias | Julia retoma: "precisa de ajuda pra achar o imóvel certo?" |
+| 45 dias | `arr_churn` → Lead Hub → Brevo Flow 6 |
+
+---
+
+## O Ciclo Fecha {#ciclo}
+
+```
+CONSÓRCIO encontra imóvel no Arremata
+→ Arremata é pago pelo Consórcio
+→ família no imóvel ✅
+```
+
+- GOLD ativo sem consórcio → Julia retoma conversa de consórcio
+- GOLD churned → Brevo F6 + C31 como oferta de reentrada
+- Indicação de GOLD → entrada C1 com `origem:indicacao`
+
+**Consórcio e Arremata se vendem mutuamente. Não são dois produtos — é um produto com dois módulos.**
+
+---
+
+## Responsáveis por Camada {#responsaveis}
+
+| Camada | Responsável(is) |
+|--------|----------------|
+| C1 Captação | Ralph (Meta) · Clipadores ext. · Caleb (orgânico) |
+| C2 Julia | Neriton (webhook + SOURCE_ID) · Taiane (comercial) |
+| C3A Comercial | Taiane → Adrian / Arthur |
+| C3B Educação | Julia (Chatfor) · Neriton (webhook Cademi) |
+| Ponte Lead Hub | Neriton (API + campos novos) · Carla (regras + permissões) |
+| Ponte → Brevo | Neriton (webhook roteamento) · Ralph (templates) |
+| C4 Brevo | Ralph (7 flows + templates) · Neriton (automações) |
+| C5 Código 31 | Ralph (execução) · Anthony/Mariah/Cintia/Mateus F. (vendas) |
+| C6 Arremata | Marcos (dev features) · Kamila (CS) · Neriton (infra) · Ralph (7 emails) |
+
+---
+
+## Gargalos Críticos {#gargalos}
+
+| # | Criticidade | Gargalo | Responsável | Ref |
+|---|-------------|---------|-------------|-----|
+| 1 | 🔴 CRÍTICO | Julia v2.2 aguarda Chatfor implementar | Taiane | #13331 |
+| 2 | 🔴 CRÍTICO | Brevo: 0 automações (6 flows + 7 emails Arremata) | Ralph | #13537 |
+| 3 | 🔴 CRÍTICO | Ponte Lead Hub→Brevo: webhook não existe | Neriton | spec pendente |
+| 4 | 🔴 CRÍTICO | Campos C31+Arremata no Lead Hub schema | Neriton | — |
+| 5 | 🔴 CRÍTICO | SOURCE_ID Julia→Bitrix: 65% WON sem rastreio | Neriton | — |
+| 6 | 🔴 CRÍTICO | Guru→Lead Hub webhook (arr_trial_ativou) | Neriton | — |
+| 7 | 🟡 ALTO | Loop Julia: ONCRMDEALUPDATE pendente | Neriton | — |
+| 8 | 🟡 ALTO | UTMs Ralph: padronizar todas campanhas | Ralph | Bíblia Growth |
+| 9 | 🟡 ALTO | Arremata churn 35%: onboarding D+1-D+60 ausente | Ralph + Neriton | — |
+
+---
+
+## Próximos Passos {#proximos}
+
+### Imediato (esta semana)
+1. Neriton: spec técnica Ponte Lead Hub→Brevo (webhook + roteamento)
+2. Neriton: campos C31+Arremata no Lead Hub schema
+3. Ralph: 7 emails onboarding Arremata no Brevo (deadline sexta)
+
+### Semana 2
+4. Taiane: alinhar prazo Chatfor (task #13331)
+5. Neriton: SOURCE_ID Julia→Bitrix fix
+6. Ralph: F1-F6 Brevo ativos com triggers de tag
+
+### Semana 3-4
+7. Neriton: Guru→Brevo webhook (GOLD → onboarding)
+8. Ralph: UTMs padronizados todas campanhas
+9. Neriton: Loop Julia webhook ONCRMDEALUPDATE
+
+### Meta Junho (Fase 1 C31 concluída)
+- Base completa testada nos eventos C31
+- Lead Hub com dados de comportamento acumulados
+- Brevo 6 flows ativos + onboarding Arremata
+- Churn Arremata < 20%
+- Julia cobertura > 80% dos leads
+
+---
+
+*Funil Growth v6 · Grupo Mirandas · 23/04/2026 · Carla COO IA*
+</textarea>
+
+<script>
+const mdRaw = document.getElementById('md-source').value.trim();
+
+function showPage(id, btn) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('page-' + id).classList.add('active');
+  btn.classList.add('active');
+  if (id === 'doc') renderMD();
+}
+
+function toggle(el) {
+  el.classList.toggle('expanded');
+}
+
+function renderMD() {
+  const el = document.getElementById('md-render');
+  if (el.innerHTML) return;
+  let html = mdRaw
+    .replace(/^# (.+)$/gm, '<h1>$1</h1>')
+    .replace(/^## (.+)$/gm, '<h2>$1</h2>')
+    .replace(/^### (.+)$/gm, '<h3>$1</h3>')
+    .replace(/^---$/gm, '<hr>')
+    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+    .replace(/`([^`]+)`/g, '<code>$1</code>')
+    .replace(/^> (.+)$/gm, '<blockquote>$1</blockquote>')
+    .replace(/^\| (.+) \|$/gm, (m, row) => {
+      const cells = row.split(' | ');
+      return '<tr>' + cells.map(c => `<td>${c.trim()}</td>`).join('') + '</tr>';
+    });
+
+  // wrap tables
+  html = html.replace(/(<tr>.*<\/tr>\n?)+/gs, match => {
+    const rows = match.trim().split('\n');
+    let out = '<table>';
+    rows.forEach((r, i) => {
+      if (i === 0) out += '<thead>' + r.replace(/<td>/g, '<th>').replace(/<\/td>/g, '</th>') + '</thead><tbody>';
+      else if (i === 1 && r.includes('---')) return;
+      else out += r;
+    });
+    return out + '</tbody></table>';
+  });
+
+  // code blocks
+  html = html.replace(/```[\w]*\n([\s\S]*?)```/g, '<pre><code>$1</code></pre>');
+
+  // lists
+  html = html.replace(/^- (.+)$/gm, '<li>$1</li>');
+  html = html.replace(/(<li>.*<\/li>\n?)+/gs, m => '<ul>' + m + '</ul>');
+
+  // numbered lists
+  html = html.replace(/^\d+\. (.+)$/gm, '<li>$1</li>');
+
+  // paragraphs
+  const lines = html.split('\n');
+  let result = '';
+  lines.forEach(line => {
+    const stripped = line.trim();
+    if (!stripped) { result += ''; return; }
+    if (/^<(h[1-3]|ul|ol|li|table|thead|tbody|tr|th|td|hr|pre|blockquote)/.test(stripped)) {
+      result += stripped + '\n';
+    } else {
+      result += '<p>' + stripped + '</p>\n';
+    }
+  });
+
+  el.innerHTML = result;
+}
+
+function downloadMD() {
+  const blob = new Blob([mdRaw], {type: 'text/markdown'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'funil-growth-v6-grupo-mirandas.md';
+  a.click();
+}
+
+function copyMD() {
+  navigator.clipboard.writeText(mdRaw).then(() => {
+    const btn = event.target;
+    btn.textContent = '✓ Copiado!';
+    setTimeout(() => btn.textContent = '⎘ Copiar markdown', 2000);
+  });
+}
+
+// animate nodes on load
+document.addEventListener('DOMContentLoaded', () => {
+  const nodes = document.querySelectorAll('.node, .bridge-node');
+  nodes.forEach((n, i) => {
+    n.style.opacity = '0';
+    n.style.transform = 'translateY(12px)';
+    n.style.transition = `opacity .4s ease ${i * 0.06}s, transform .4s ease ${i * 0.06}s`;
+    setTimeout(() => { n.style.opacity = '1'; n.style.transform = 'translateY(0)'; }, 50);
+  });
+});
+</script>
+</body>
+</html>
