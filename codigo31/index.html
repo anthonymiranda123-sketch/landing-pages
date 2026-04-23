@@ -1,0 +1,1854 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Código 31 — Anthony Miranda | Movimento dos Donos</title>
+  <meta name="description" content="Evento gratuito ao vivo. Anthony Miranda mostra como qualquer pessoa com R$764/mês compra um imóvel de R$300.000 — sem banco, sem entrada, sem financiamento." />
+  <meta property="og:title" content="Código 31 — Anthony Miranda | Movimento dos Donos" />
+  <meta property="og:description" content="Evento gratuito ao vivo. Como qualquer pessoa com R$764/mês compra um imóvel de R$300.000 — sem banco, sem entrada, sem financiamento." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ── TOKENS ── */
+    :root {
+      --bg: #080807;
+      --bg-2: #0F0F0D;
+      --bg-3: #161614;
+      --bg-4: #1D1D1A;
+      --border: #2A2A26;
+      --border-light: #3A3A35;
+      --text: #F5F3EE;
+      --text-2: #A8A49C;
+      --text-3: #6B6860;
+      --gold: #C9A84C;
+      --gold-light: #E8C96A;
+      --gold-dark: #A88A38;
+      --gold-glow: rgba(201,168,76,0.12);
+      --gold-glow-strong: rgba(201,168,76,0.25);
+      --orange: #D4622A;
+      --green: #3D8C5E;
+      --green-light: #52B97D;
+      --red: #C0392B;
+    }
+
+    /* ── RESET ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 400;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* ── GRAIN OVERLAY ── */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.03;
+      mix-blend-mode: overlay;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23noise)'/%3E%3C/svg%3E");
+    }
+
+    /* ── GRID LINES ── */
+    .grid-bg {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(var(--border) 1px, transparent 1px),
+        linear-gradient(90deg, var(--border) 1px, transparent 1px);
+      background-size: 60px 60px;
+      -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black 20%, transparent 80%);
+      mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black 20%, transparent 80%);
+      opacity: 0.4;
+    }
+
+    /* ── TYPOGRAPHY ── */
+    .serif { font-family: 'Instrument Serif', serif; }
+    .mono { font-family: 'DM Mono', monospace; }
+    .eyebrow {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+
+    /* ── LINKS ── */
+    a { color: inherit; text-decoration: none; }
+
+    /* ── SECTION SPACING ── */
+    section { position: relative; }
+    .section-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 100px 24px;
+    }
+    .section-inner--sm { padding: 72px 24px; }
+    .section-header { margin-bottom: 56px; }
+    .section-header .eyebrow { margin-bottom: 12px; }
+    .section-title {
+      font-family: 'Instrument Serif', serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 400;
+      line-height: 1.2;
+      color: var(--text);
+    }
+    .section-title em { font-style: italic; color: var(--gold-light); }
+
+    /* ── GOLD LINE CARD ── */
+    .gold-line-card {
+      position: relative;
+      background: var(--bg-3);
+      border: 1px solid var(--border);
+      border-radius: 2px;
+    }
+    .gold-line-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      border-radius: 2px 2px 0 0;
+    }
+
+    /* ── BUTTONS ── */
+    .btn-gold {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: linear-gradient(135deg, var(--gold-dark) 0%, var(--gold) 50%, var(--gold-light) 100%);
+      color: #080807;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 700;
+      font-size: 0.95rem;
+      letter-spacing: 0.04em;
+      padding: 16px 32px;
+      border: none;
+      border-radius: 2px;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      box-shadow: 0 4px 24px var(--gold-glow-strong);
+    }
+    .btn-gold:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 40px var(--gold-glow-strong);
+    }
+    .btn-gold:active { transform: translateY(0); }
+    .btn-gold--lg { font-size: 1.05rem; padding: 20px 40px; }
+
+    /* ── REVEAL ANIMATIONS ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.65s ease, transform 0.65s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+    .reveal-delay-4 { transition-delay: 0.4s; }
+
+    /* ════════════════════════════════════
+       STICKY BAR
+    ════════════════════════════════════ */
+    #sticky-bar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 1000;
+      background: rgba(8,8,7,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      transform: translateY(-100%);
+      transition: transform 0.35s cubic-bezier(0.25,0.8,0.25,1);
+      padding: 12px 24px;
+    }
+    #sticky-bar.visible { transform: translateY(0); }
+    .sticky-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .sticky-brand {
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--text-2);
+    }
+    .sticky-brand em { font-style: italic; color: var(--gold); }
+    .sticky-cta {
+      background: linear-gradient(135deg, var(--gold-dark), var(--gold));
+      color: #080807;
+      font-weight: 700;
+      font-size: 0.8rem;
+      letter-spacing: 0.06em;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 2px;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.2s;
+    }
+    .sticky-cta:hover { background: var(--gold-light); }
+
+    /* ════════════════════════════════════
+       HERO
+    ════════════════════════════════════ */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      background: var(--bg);
+      overflow: hidden;
+    }
+    .hero-glow {
+      position: absolute;
+      top: -200px; left: 50%;
+      transform: translateX(-50%);
+      width: 900px;
+      height: 600px;
+      background: radial-gradient(ellipse at 50% 0%, var(--gold-glow-strong) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 120px 24px 80px;
+      position: relative;
+      z-index: 2;
+      display: grid;
+      grid-template-columns: 1fr 420px;
+      gap: 80px;
+      align-items: start;
+    }
+    @media (max-width: 900px) {
+      .hero-inner { grid-template-columns: 1fr; gap: 48px; }
+    }
+
+    /* Tag pill */
+    .hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gold);
+      background: var(--gold-glow);
+      border: 1px solid rgba(201,168,76,0.25);
+      border-radius: 100px;
+      padding: 6px 14px;
+      margin-bottom: 28px;
+    }
+    .hero-tag-dot {
+      width: 6px; height: 6px;
+      background: var(--gold);
+      border-radius: 50%;
+      animation: pulse-dot 2s ease-in-out infinite;
+    }
+    @keyframes pulse-dot {
+      0%,100% { opacity: 1; transform: scale(1); box-shadow: 0 0 0 0 var(--gold-glow-strong); }
+      50% { opacity: 0.8; transform: scale(1.2); box-shadow: 0 0 0 6px transparent; }
+    }
+
+    .hero-h1 {
+      font-family: 'Instrument Serif', serif;
+      font-size: clamp(2.8rem, 5.5vw, 4.2rem);
+      font-weight: 400;
+      line-height: 1.1;
+      color: var(--text);
+      margin-bottom: 12px;
+    }
+    .hero-h1 em { font-style: italic; color: var(--gold-light); }
+
+    .hero-subtitle {
+      font-size: 1.4rem;
+      font-weight: 300;
+      color: var(--text-2);
+      margin-bottom: 20px;
+    }
+    .hero-sub {
+      font-size: 1rem;
+      font-weight: 300;
+      color: var(--text-2);
+      line-height: 1.7;
+      max-width: 560px;
+      margin-bottom: 44px;
+    }
+
+    /* Hero numbers */
+    .hero-numbers {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      overflow: hidden;
+      margin-bottom: 48px;
+    }
+    @media (max-width: 700px) { .hero-numbers { grid-template-columns: repeat(2, 1fr); } }
+    .hero-num-cell {
+      background: var(--bg-2);
+      padding: 18px 16px;
+      text-align: center;
+    }
+    .hero-num-value {
+      font-family: 'DM Mono', monospace;
+      font-size: 1.15rem;
+      font-weight: 500;
+      color: var(--gold);
+      display: block;
+      margin-bottom: 4px;
+    }
+    .hero-num-label {
+      font-size: 0.72rem;
+      color: var(--text-3);
+      letter-spacing: 0.04em;
+    }
+
+    /* Countdown */
+    .countdown-wrap {
+      margin-bottom: 44px;
+    }
+    .countdown-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-3);
+      margin-bottom: 12px;
+    }
+    .countdown-grid {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+    .countdown-unit {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+    }
+    .countdown-num {
+      font-family: 'DM Mono', monospace;
+      font-size: 2rem;
+      font-weight: 500;
+      color: var(--gold);
+      background: var(--bg-3);
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      padding: 8px 14px;
+      min-width: 68px;
+      text-align: center;
+      line-height: 1;
+    }
+    .countdown-unit-label {
+      font-size: 0.62rem;
+      font-family: 'DM Mono', monospace;
+      color: var(--text-3);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .countdown-sep {
+      font-family: 'DM Mono', monospace;
+      font-size: 1.5rem;
+      color: var(--text-3);
+      margin-bottom: 20px;
+    }
+
+    /* Hero form */
+    .hero-form-box {
+      background: var(--bg-3);
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      padding: 36px 32px;
+      position: relative;
+    }
+    .hero-form-box::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    }
+    .hero-form-title {
+      font-family: 'Instrument Serif', serif;
+      font-size: 1.5rem;
+      color: var(--text);
+      margin-bottom: 6px;
+    }
+    .hero-form-title em { font-style: italic; color: var(--gold-light); }
+    .hero-form-sub {
+      font-size: 0.85rem;
+      color: var(--text-3);
+      margin-bottom: 24px;
+    }
+    .form-field {
+      margin-bottom: 12px;
+    }
+    .form-field label {
+      display: block;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--text-3);
+      margin-bottom: 6px;
+    }
+    .form-field input {
+      width: 100%;
+      background: var(--bg-4);
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      padding: 14px 16px;
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .form-field input:focus { border-color: var(--gold); }
+    .form-field input::placeholder { color: var(--text-3); }
+    .form-submit { width: 100%; margin-top: 8px; }
+    .form-note {
+      margin-top: 12px;
+      font-size: 0.75rem;
+      color: var(--text-3);
+      text-align: center;
+    }
+    .form-success {
+      display: none;
+      text-align: center;
+      padding: 24px 0;
+    }
+    .form-success-icon {
+      font-size: 2.5rem;
+      margin-bottom: 12px;
+    }
+    .form-success-text {
+      font-size: 1rem;
+      color: var(--green-light);
+      font-weight: 500;
+    }
+
+    /* ════════════════════════════════════
+       JOÃO vs MARIA
+    ════════════════════════════════════ */
+    #joao-maria {
+      background: var(--bg-3);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .comparison-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-bottom: 48px;
+    }
+    @media (max-width: 700px) { .comparison-grid { grid-template-columns: 1fr; } }
+    .comp-card {
+      background: var(--bg-4);
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      padding: 32px 28px;
+    }
+    .comp-card--gold {
+      border-color: rgba(201,168,76,0.35);
+      background: linear-gradient(135deg, var(--bg-4) 0%, rgba(201,168,76,0.04) 100%);
+      position: relative;
+    }
+    .comp-card--gold::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    }
+    .comp-card-name {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-3);
+      margin-bottom: 16px;
+    }
+    .comp-card-name--gold { color: var(--gold); }
+    .comp-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.9rem;
+      color: var(--text-2);
+      line-height: 1.5;
+    }
+    .comp-item:last-of-type { border-bottom: none; }
+    .comp-icon { color: var(--text-3); flex-shrink: 0; margin-top: 2px; }
+    .comp-icon--gold { color: var(--gold); }
+    .comp-footer {
+      margin-top: 20px;
+      padding: 14px 16px;
+      border-radius: 2px;
+      font-weight: 600;
+      font-size: 0.85rem;
+    }
+    .comp-footer--red { background: rgba(192,57,43,0.12); color: #e87469; border: 1px solid rgba(192,57,43,0.25); }
+    .comp-footer--green { background: rgba(61,140,94,0.12); color: var(--green-light); border: 1px solid rgba(61,140,94,0.25); }
+
+    .blockquote-wrap {
+      max-width: 680px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    blockquote {
+      font-family: 'Instrument Serif', serif;
+      font-style: italic;
+      font-size: clamp(1.3rem, 2.5vw, 1.8rem);
+      color: var(--text);
+      line-height: 1.5;
+      margin-bottom: 16px;
+    }
+    blockquote em { color: var(--gold-light); font-style: normal; }
+    .blockquote-author {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-3);
+    }
+
+    /* ════════════════════════════════════
+       HISTÓRIA PESSOAL
+    ════════════════════════════════════ */
+    #historia {
+      background: var(--bg);
+    }
+    .historia-grid {
+      display: grid;
+      grid-template-columns: 1fr 420px;
+      gap: 72px;
+      align-items: center;
+    }
+    @media (max-width: 860px) {
+      .historia-grid { grid-template-columns: 1fr; gap: 48px; }
+      .historia-photo-wrap { order: -1; }
+    }
+    .historia-eyebrow { margin-bottom: 12px; }
+    .historia-title {
+      font-family: 'Instrument Serif', serif;
+      font-size: clamp(2rem, 3.5vw, 2.8rem);
+      font-weight: 400;
+      line-height: 1.2;
+      margin-bottom: 28px;
+    }
+    .historia-title em { font-style: italic; color: var(--gold-light); }
+    .historia-text {
+      color: var(--text-2);
+      font-size: 0.95rem;
+      line-height: 1.8;
+    }
+    .historia-text p { margin-bottom: 16px; }
+    .historia-text strong { color: var(--text); font-weight: 600; }
+
+    .historia-photo-wrap {
+      position: relative;
+    }
+    .historia-photo {
+      width: 100%;
+      border-radius: 2px;
+      border: 1px solid var(--border);
+      display: block;
+      filter: grayscale(1);
+      transition: filter 0.5s ease;
+    }
+    .historia-photo:hover { filter: grayscale(0); }
+    .float-card {
+      position: absolute;
+      bottom: -20px;
+      right: -20px;
+      background: var(--gold);
+      color: #080807;
+      padding: 16px 20px;
+      border-radius: 2px;
+    }
+    .float-card-num {
+      font-family: 'DM Mono', monospace;
+      font-size: 1.4rem;
+      font-weight: 500;
+      display: block;
+      line-height: 1;
+    }
+    .float-card-label {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      opacity: 0.7;
+      margin-top: 4px;
+    }
+    @media (max-width: 860px) {
+      .float-card { right: 16px; bottom: -16px; }
+    }
+
+    /* ════════════════════════════════════
+       O MÉTODO
+    ════════════════════════════════════ */
+    #metodo {
+      background: var(--bg-2);
+      border-top: 1px solid var(--border);
+    }
+    .metodo-wrap {
+      background: var(--bg-3);
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      position: relative;
+      padding: 56px 48px;
+    }
+    .metodo-wrap::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    }
+    @media (max-width: 700px) { .metodo-wrap { padding: 36px 24px; } }
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 32px;
+      margin-bottom: 48px;
+    }
+    @media (max-width: 860px) { .steps-grid { grid-template-columns: 1fr; gap: 24px; } }
+    .step-card {
+      padding: 28px 24px;
+      background: var(--bg-4);
+      border: 1px solid var(--border);
+      border-radius: 2px;
+    }
+    .step-num {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
+      color: var(--gold);
+      margin-bottom: 14px;
+    }
+    .step-title {
+      font-family: 'Instrument Serif', serif;
+      font-size: 1.25rem;
+      color: var(--text);
+      margin-bottom: 10px;
+    }
+    .step-body {
+      font-size: 0.875rem;
+      color: var(--text-2);
+      line-height: 1.7;
+    }
+    .step-body strong { color: var(--text); font-weight: 600; }
+
+    .callout-card {
+      background: var(--bg-4);
+      border: 1px solid rgba(201,168,76,0.3);
+      border-radius: 2px;
+      padding: 28px 32px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      box-shadow: 0 0 40px var(--gold-glow);
+    }
+    .callout-icon {
+      font-size: 2rem;
+      flex-shrink: 0;
+    }
+    .callout-num {
+      font-family: 'Instrument Serif', serif;
+      font-size: 2.2rem;
+      color: var(--gold);
+      font-style: italic;
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+    .callout-text {
+      font-size: 0.875rem;
+      color: var(--text-2);
+      line-height: 1.5;
+    }
+    @media (max-width: 700px) {
+      .callout-card { flex-direction: column; text-align: center; }
+    }
+
+    /* ════════════════════════════════════
+       PERFIS
+    ════════════════════════════════════ */
+    #perfis {
+      background: var(--bg);
+    }
+    .perfis-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+    @media (max-width: 860px) { .perfis-grid { grid-template-columns: 1fr; } }
+    .perfil-card {
+      background: var(--bg-3);
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      padding: 32px 28px;
+      transition: border-color 0.25s, box-shadow 0.25s;
+    }
+    .perfil-card:hover {
+      border-color: var(--border-light);
+      box-shadow: 0 8px 32px var(--gold-glow);
+    }
+    .perfil-emoji {
+      font-size: 2rem;
+      margin-bottom: 16px;
+      display: block;
+    }
+    .perfil-name {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 8px;
+    }
+    .perfil-title {
+      font-family: 'Instrument Serif', serif;
+      font-size: 1.3rem;
+      color: var(--text);
+      margin-bottom: 12px;
+    }
+    .perfil-desc {
+      font-size: 0.875rem;
+      color: var(--text-2);
+      line-height: 1.7;
+    }
+    .perfil-tag {
+      margin-top: 16px;
+      display: inline-block;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.68rem;
+      letter-spacing: 0.06em;
+      color: var(--gold-dark);
+      background: var(--gold-glow);
+      border: 1px solid rgba(201,168,76,0.2);
+      border-radius: 2px;
+      padding: 4px 10px;
+    }
+
+    /* ════════════════════════════════════
+       O QUE VAI APRENDER
+    ════════════════════════════════════ */
+    #aprender {
+      background: var(--bg-2);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .learn-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+    @media (max-width: 700px) { .learn-grid { grid-template-columns: 1fr; } }
+    .learn-item {
+      background: var(--bg-3);
+      padding: 28px 28px;
+      display: flex;
+      align-items: flex-start;
+      gap: 20px;
+    }
+    .learn-num {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--gold);
+      font-weight: 500;
+      flex-shrink: 0;
+      padding-top: 2px;
+    }
+    .learn-title {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 6px;
+    }
+    .learn-desc {
+      font-size: 0.82rem;
+      color: var(--text-3);
+      line-height: 1.6;
+    }
+
+    /* ════════════════════════════════════
+       SOBRE ANTHONY
+    ════════════════════════════════════ */
+    #sobre {
+      background: var(--bg);
+    }
+    .sobre-grid {
+      display: grid;
+      grid-template-columns: 360px 1fr;
+      gap: 72px;
+      align-items: center;
+    }
+    @media (max-width: 860px) {
+      .sobre-grid { grid-template-columns: 1fr; gap: 40px; }
+    }
+    .sobre-photo-wrap { position: relative; }
+    .sobre-photo {
+      width: 100%;
+      border-radius: 2px;
+      border: 1px solid var(--border);
+      filter: grayscale(1);
+      transition: filter 0.5s;
+    }
+    .sobre-photo:hover { filter: grayscale(0); }
+    .sobre-stats {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      overflow: hidden;
+      margin-bottom: 28px;
+    }
+    .sobre-stat {
+      background: var(--bg-3);
+      padding: 18px 20px;
+    }
+    .sobre-stat-num {
+      font-family: 'DM Mono', monospace;
+      font-size: 1.2rem;
+      font-weight: 500;
+      color: var(--gold);
+      display: block;
+    }
+    .sobre-stat-label {
+      font-size: 0.75rem;
+      color: var(--text-3);
+      margin-top: 3px;
+    }
+    .sobre-title {
+      font-family: 'Instrument Serif', serif;
+      font-size: clamp(1.8rem, 3vw, 2.5rem);
+      font-weight: 400;
+      line-height: 1.2;
+      margin-bottom: 20px;
+    }
+    .sobre-title em { font-style: italic; color: var(--gold-light); }
+    .sobre-text {
+      font-size: 0.9rem;
+      color: var(--text-2);
+      line-height: 1.8;
+    }
+    .sobre-text p { margin-bottom: 14px; }
+    .sobre-text strong { color: var(--text); font-weight: 600; }
+
+    /* ════════════════════════════════════
+       BÔNUS
+    ════════════════════════════════════ */
+    #bonus {
+      background: var(--bg-3);
+      border-top: 1px solid var(--border);
+    }
+    .bonus-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 32px;
+    }
+    @media (max-width: 700px) { .bonus-grid { grid-template-columns: 1fr; } }
+    .bonus-card {
+      background: var(--bg-4);
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      padding: 28px 24px;
+      position: relative;
+    }
+    .bonus-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    }
+    .bonus-badge {
+      display: inline-block;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--gold);
+      background: var(--gold-glow);
+      border: 1px solid rgba(201,168,76,0.2);
+      padding: 3px 8px;
+      border-radius: 2px;
+      margin-bottom: 12px;
+    }
+    .bonus-title {
+      font-family: 'Instrument Serif', serif;
+      font-size: 1.2rem;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+    .bonus-desc {
+      font-size: 0.85rem;
+      color: var(--text-2);
+      line-height: 1.6;
+      margin-bottom: 14px;
+    }
+    .bonus-value {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.78rem;
+      color: var(--text-3);
+    }
+    .bonus-value s { color: var(--red); }
+    .price-callout {
+      background: var(--bg-4);
+      border: 1px solid rgba(201,168,76,0.25);
+      border-radius: 2px;
+      padding: 24px 32px;
+      text-align: center;
+      box-shadow: 0 0 40px var(--gold-glow);
+    }
+    .price-callout-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.68rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-3);
+      margin-bottom: 8px;
+    }
+    .price-callout-num {
+      font-family: 'Instrument Serif', serif;
+      font-size: 2.5rem;
+      color: var(--gold);
+      font-style: italic;
+    }
+    .price-callout-note {
+      font-size: 0.8rem;
+      color: var(--text-3);
+      margin-top: 6px;
+    }
+
+    /* ════════════════════════════════════
+       DEPOIMENTOS
+    ════════════════════════════════════ */
+    #depoimentos {
+      background: var(--bg);
+      border-top: 1px solid var(--border);
+    }
+    .depo-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+    @media (max-width: 860px) { .depo-grid { grid-template-columns: 1fr; } }
+    .depo-card {
+      background: var(--bg-3);
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      padding: 28px 24px;
+    }
+    .depo-stars {
+      color: var(--gold);
+      font-size: 0.85rem;
+      letter-spacing: 2px;
+      margin-bottom: 14px;
+    }
+    .depo-text {
+      font-size: 0.875rem;
+      color: var(--text-2);
+      line-height: 1.7;
+      margin-bottom: 20px;
+    }
+    .depo-name {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 2px;
+    }
+    .depo-info {
+      font-size: 0.75rem;
+      color: var(--text-3);
+    }
+
+    /* ════════════════════════════════════
+       FAQ
+    ════════════════════════════════════ */
+    #faq {
+      background: var(--bg-2);
+      border-top: 1px solid var(--border);
+    }
+    .faq-list { max-width: 780px; margin: 0 auto; }
+    .faq-item {
+      border-bottom: 1px solid var(--border);
+    }
+    .faq-question {
+      width: 100%;
+      background: none;
+      border: none;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      padding: 22px 0;
+      cursor: pointer;
+      text-align: left;
+    }
+    .faq-q-text {
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: var(--text);
+    }
+    .faq-icon {
+      font-family: 'DM Mono', monospace;
+      font-size: 1.2rem;
+      color: var(--gold);
+      flex-shrink: 0;
+      transition: transform 0.3s;
+    }
+    .faq-item.open .faq-icon { transform: rotate(45deg); }
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.35s ease;
+    }
+    .faq-answer-inner {
+      padding: 0 0 22px;
+      font-size: 0.875rem;
+      color: var(--text-2);
+      line-height: 1.75;
+    }
+    .faq-answer-inner strong { color: var(--text); font-weight: 600; }
+
+    /* ════════════════════════════════════
+       CTA FINAL
+    ════════════════════════════════════ */
+    #cta-final {
+      background: var(--bg);
+      border-top: 1px solid var(--border);
+    }
+    .cta-final-inner {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 100px 24px;
+      text-align: center;
+    }
+    .cta-final-title {
+      font-family: 'Instrument Serif', serif;
+      font-size: clamp(2.2rem, 4.5vw, 3.4rem);
+      font-weight: 400;
+      line-height: 1.2;
+      margin-bottom: 20px;
+    }
+    .cta-final-title em { font-style: italic; color: var(--gold-light); }
+    .cta-final-body {
+      font-size: 1rem;
+      color: var(--text-2);
+      max-width: 540px;
+      margin: 0 auto 48px;
+      line-height: 1.7;
+    }
+    .cta-form-box {
+      background: var(--bg-3);
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      padding: 40px;
+      max-width: 480px;
+      margin: 0 auto;
+      position: relative;
+    }
+    .cta-form-box::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    }
+
+    /* ════════════════════════════════════
+       FOOTER
+    ════════════════════════════════════ */
+    footer {
+      background: var(--bg-2);
+      border-top: 1px solid var(--border);
+      padding: 28px 24px;
+      text-align: center;
+    }
+    .footer-text {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.06em;
+      color: var(--text-3);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- VK Pixel -->
+  <script>(function(w,d,s,u){w.vkPixel=w.vkPixel||{_q:[]};w.vkPixel._q.push(['init','i7mVFF8NHlWLh1vdztqp']);var js=d.createElement(s);js.src=u;js.async=true;d.head.appendChild(js)})(window,document,'script','https://cf.vkdigital.com.br/pixel.js?v=55');</script>
+
+  <!-- ── STICKY BAR ── -->
+  <div id="sticky-bar">
+    <div class="sticky-inner">
+      <span class="sticky-brand">Código 31 · <em>Movimento dos Donos</em></span>
+      <button class="sticky-cta" onclick="document.getElementById('form-hero').scrollIntoView({behavior:'smooth'})">GARANTIR VAGA</button>
+    </div>
+  </div>
+
+  <!-- ── HERO ── -->
+  <section id="hero">
+    <div class="hero-glow"></div>
+    <div class="grid-bg"></div>
+    <div class="hero-inner">
+
+      <!-- LEFT COPY -->
+      <div>
+        <div class="hero-tag reveal">
+          <span class="hero-tag-dot"></span>
+          Movimento dos Donos · Código 31
+        </div>
+        <h1 class="hero-h1 reveal reveal-delay-1">
+          96% das pessoas vão morrer<br>sem <em>nenhum imóvel.</em>
+        </h1>
+        <p class="hero-subtitle reveal reveal-delay-2">Você vai ser um deles?</p>
+        <p class="hero-sub reveal reveal-delay-2">
+          Evento gratuito ao vivo. Anthony Miranda mostra como qualquer pessoa com <strong style="color:var(--text);font-weight:600;">R$764/mês</strong> compra um imóvel de R$300.000 — sem banco, sem entrada, sem financiamento.
+        </p>
+
+        <!-- Numbers -->
+        <div class="hero-numbers reveal reveal-delay-3">
+          <div class="hero-num-cell">
+            <span class="hero-num-value">+15K</span>
+            <span class="hero-num-label">famílias</span>
+          </div>
+          <div class="hero-num-cell">
+            <span class="hero-num-value">R$900M</span>
+            <span class="hero-num-label">arremates</span>
+          </div>
+          <div class="hero-num-cell">
+            <span class="hero-num-value">R$300K</span>
+            <span class="hero-num-label">por R$764/mês</span>
+          </div>
+          <div class="hero-num-cell">
+            <span class="hero-num-value">9.5/10</span>
+            <span class="hero-num-label">NPS</span>
+          </div>
+        </div>
+
+        <!-- Countdown -->
+        <div class="countdown-wrap reveal reveal-delay-3">
+          <p class="countdown-label">Próxima live em</p>
+          <div class="countdown-grid">
+            <div class="countdown-unit">
+              <span class="countdown-num" id="cd-days">00</span>
+              <span class="countdown-unit-label">dias</span>
+            </div>
+            <span class="countdown-sep">:</span>
+            <div class="countdown-unit">
+              <span class="countdown-num" id="cd-hours">00</span>
+              <span class="countdown-unit-label">horas</span>
+            </div>
+            <span class="countdown-sep">:</span>
+            <div class="countdown-unit">
+              <span class="countdown-num" id="cd-min">00</span>
+              <span class="countdown-unit-label">min</span>
+            </div>
+            <span class="countdown-sep">:</span>
+            <div class="countdown-unit">
+              <span class="countdown-num" id="cd-sec">00</span>
+              <span class="countdown-unit-label">seg</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT FORM -->
+      <div class="hero-form-box reveal reveal-delay-2" id="form-hero">
+        <h3 class="hero-form-title">Reservar minha <em>vaga gratuita</em></h3>
+        <p class="hero-form-sub">Ao vivo · Vagas limitadas · 100% gratuito</p>
+        <form id="form-hero-el" onsubmit="submitForm(event,'form-hero-el','form-hero-success')">
+          <div class="form-field">
+            <label>Seu nome</label>
+            <input type="text" name="name" placeholder="Como posso te chamar?" required />
+          </div>
+          <div class="form-field">
+            <label>WhatsApp</label>
+            <input type="tel" name="phone" placeholder="(11) 99999-9999" required />
+          </div>
+          <button type="submit" class="btn-gold btn-gold--lg form-submit">
+            GARANTIR MINHA VAGA GRATUITA →
+          </button>
+        </form>
+        <div class="form-success" id="form-hero-success">
+          <div class="form-success-icon">✓</div>
+          <p class="form-success-text">Vaga garantida! Você receberá o link de acesso no WhatsApp.</p>
+        </div>
+        <p class="form-note">100% gratuito · Ao vivo · Vagas limitadas</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── JOÃO vs MARIA ── -->
+  <section id="joao-maria">
+    <div class="section-inner">
+      <div class="section-header reveal">
+        <p class="eyebrow">A HISTÓRIA DE DOIS VIZINHOS</p>
+        <h2 class="section-title">Mesma renda. Destinos <em>completamente diferentes.</em></h2>
+      </div>
+
+      <div class="comparison-grid">
+        <!-- João -->
+        <div class="comp-card reveal reveal-delay-1">
+          <p class="comp-card-name">João — a maioria das pessoas</p>
+          <div class="comp-item">
+            <span class="comp-icon">✗</span>
+            <span>Paga R$1.400/mês de aluguel há 8 anos</span>
+          </div>
+          <div class="comp-item">
+            <span class="comp-icon">✗</span>
+            <span>Gastou R$134.400 que nunca vai ver de volta</span>
+          </div>
+          <div class="comp-item">
+            <span class="comp-icon">✗</span>
+            <span>Esperando a "hora certa" que nunca chega</span>
+          </div>
+          <div class="comp-item">
+            <span class="comp-icon">✗</span>
+            <span>Banco pediu R$60.000 de entrada — não tinha</span>
+          </div>
+          <div class="comp-footer comp-footer--red">
+            Daqui 20 anos: ainda pagando aluguel
+          </div>
+        </div>
+
+        <!-- Maria -->
+        <div class="comp-card comp-card--gold reveal reveal-delay-2">
+          <p class="comp-card-name comp-card-name--gold">Maria — quem aprendeu o método</p>
+          <div class="comp-item">
+            <span class="comp-icon comp-icon--gold">✓</span>
+            <span>Consórcio R$300K por <strong style="color:var(--text)">R$764/mês</strong></span>
+          </div>
+          <div class="comp-item">
+            <span class="comp-icon comp-icon--gold">✓</span>
+            <span>Contemplada em 5 meses com lance embutido</span>
+          </div>
+          <div class="comp-item">
+            <span class="comp-icon comp-icon--gold">✓</span>
+            <span>Arremata imóvel no leilão com 40% de desconto</span>
+          </div>
+          <div class="comp-item">
+            <span class="comp-icon comp-icon--gold">✓</span>
+            <span>Usou o "troco" para financiar o 2º consórcio</span>
+          </div>
+          <div class="comp-item">
+            <span class="comp-icon comp-icon--gold">✓</span>
+            <span>Hoje: 3 imóveis. Zero banco. Zero entrada.</span>
+          </div>
+          <div class="comp-footer comp-footer--green">
+            Daqui 20 anos: R$2M+ em patrimônio
+          </div>
+        </div>
+      </div>
+
+      <div class="blockquote-wrap reveal">
+        <blockquote>
+          "O segredo nunca vai ser a grana que você tem.<br>O segredo sempre vai ser a <em>estratégia</em>."
+        </blockquote>
+        <p class="blockquote-author">— Anthony Miranda</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── HISTÓRIA PESSOAL ── -->
+  <section id="historia">
+    <div class="section-inner">
+      <div class="historia-grid">
+        <div>
+          <p class="eyebrow historia-eyebrow reveal">DE ONDE EU VIM</p>
+          <h2 class="historia-title reveal reveal-delay-1">Eu já fui o <em>João.</em></h2>
+          <div class="historia-text reveal reveal-delay-2">
+            <p>Morava numa casinha de R$320 de aluguel. <strong>Rato entrava por baixo da porta.</strong> Esposa trabalhando no Walmart pra ajudar a pagar as contas. Luz cortada não era exceção — era rotina.</p>
+            <p>Descobri o consórcio por necessidade. Não por estratégia de investidor sofisticado. Por sobrevivência. E foi aí que tudo mudou.</p>
+            <p><strong>"Quem não tem capital usa inteligência."</strong> Essa frase virou o norte de tudo que construí depois.</p>
+            <p>Hoje já movimentei <strong>mais de R$1,5 bilhão</strong> em créditos e ajudei mais de 15.000 famílias a conquistar o primeiro imóvel sem banco, sem entrada, sem financiamento.</p>
+          </div>
+        </div>
+        <div class="historia-photo-wrap reveal reveal-delay-2">
+          <img
+            src="https://codigo31.anthonymiranda.com.br/img/anthony-miranda.webp"
+            alt="Anthony Miranda"
+            class="historia-photo"
+          />
+          <div class="float-card">
+            <span class="float-card-num">R$1,5Bi</span>
+            <span class="float-card-label">movimentados</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── O MÉTODO ── -->
+  <section id="metodo">
+    <div class="section-inner">
+      <div class="section-header reveal">
+        <p class="eyebrow">O MECANISMO</p>
+        <h2 class="section-title">O método que <em>nenhum banco</em> te ensina.</h2>
+      </div>
+
+      <div class="metodo-wrap">
+        <div class="steps-grid">
+          <div class="step-card reveal reveal-delay-1">
+            <p class="step-num">PASSO 01</p>
+            <h3 class="step-title">Consórcio como entrada</h3>
+            <p class="step-body">
+              Cota de R$300K por <strong>R$764/mês</strong>. Usa lance embutido ou fidelidade para ser contemplado em 3 a 6 meses. Sem banco. Sem entrada. Sem score de crédito travando.
+            </p>
+          </div>
+          <div class="step-card reveal reveal-delay-2">
+            <p class="step-num">PASSO 02</p>
+            <h3 class="step-title">Arrematа no leilão</h3>
+            <p class="step-body">
+              Carta de crédito em mãos, você entra num leilão e compra um imóvel com <strong>30 a 60% de desconto</strong>. Crédito de R$300K pode comprar um imóvel de R$500K.
+            </p>
+          </div>
+          <div class="step-card reveal reveal-delay-3">
+            <p class="step-num">PASSO 03</p>
+            <h3 class="step-title">O "troco" financia o próximo</h3>
+            <p class="step-body">
+              A diferença entre o crédito e o valor do arremate vira <strong>entrada do próximo consórcio</strong>. A bola de neve começa. Você repete o processo — e o patrimônio cresce sozinho.
+            </p>
+          </div>
+        </div>
+
+        <div class="callout-card reveal">
+          <span class="callout-icon">📊</span>
+          <div>
+            <div class="callout-num">88%</div>
+            <p class="callout-text">
+              <strong style="color:var(--text)">de probabilidade</strong> — 10.000 cenários Monte Carlo mostram que quem começa hoje com uma cota de R$300K tem 88% de chance de acumular <strong style="color:var(--text)">20 imóveis em 20 anos.</strong>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── PERFIS ── -->
+  <section id="perfis">
+    <div class="section-inner">
+      <div class="section-header reveal">
+        <p class="eyebrow">QUAL É O SEU PERFIL?</p>
+        <h2 class="section-title">Todo dono começa em <em>um desses</em> três estágios.</h2>
+      </div>
+
+      <div class="perfis-grid">
+        <div class="perfil-card reveal reveal-delay-1">
+          <span class="perfil-emoji">🌱</span>
+          <p class="perfil-name">Estágio 01</p>
+          <h3 class="perfil-title">Semeador</h3>
+          <p class="perfil-desc">
+            Você ainda paga aluguel e quer conquistar o primeiro imóvel. Sabe que tem como, mas não sabe exatamente como. O consórcio certo aqui é a alavanca que falta.
+          </p>
+          <span class="perfil-tag">Cota R$100K–R$300K · a partir de R$394/mês</span>
+        </div>
+        <div class="perfil-card reveal reveal-delay-2">
+          <span class="perfil-emoji">♟️</span>
+          <p class="perfil-name">Estágio 02</p>
+          <h3 class="perfil-title">Estrategista</h3>
+          <p class="perfil-desc">
+            Você já tem um imóvel mas quer multiplicar o patrimônio. Usa o primeiro como base para alavancar o segundo — e entende que o leilão é onde o jogo muda.
+          </p>
+          <span class="perfil-tag">Cota R$300K–R$500K</span>
+        </div>
+        <div class="perfil-card reveal reveal-delay-3">
+          <span class="perfil-emoji">🚀</span>
+          <p class="perfil-name">Estágio 03</p>
+          <h3 class="perfil-title">Acelerador</h3>
+          <p class="perfil-desc">
+            Você já tem portfólio e quer montar uma máquina de renda passiva. Entra no modo portfólio: múltiplas cotas, múltiplos arremates, fluxo de caixa crescente.
+          </p>
+          <span class="perfil-tag">Cota R$500K+ · modo portfólio</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── O QUE VAI APRENDER ── -->
+  <section id="aprender">
+    <div class="section-inner">
+      <div class="section-header reveal">
+        <p class="eyebrow">CONTEÚDO DO EVENTO</p>
+        <h2 class="section-title">O que você vai <em>aprender na live.</em></h2>
+      </div>
+
+      <div class="learn-grid">
+        <div class="learn-item reveal reveal-delay-1">
+          <span class="learn-num">01</span>
+          <div>
+            <p class="learn-title">Por que 96% vai morrer sem imóvel</p>
+            <p class="learn-desc">A armadilha do aluguel + a mentira do financiamento bancário. O que ninguém te conta sobre os dois.</p>
+          </div>
+        </div>
+        <div class="learn-item reveal reveal-delay-2">
+          <span class="learn-num">02</span>
+          <div>
+            <p class="learn-title">Lance Embutido e Lance Fidelidade</p>
+            <p class="learn-desc">Como usar esses dois mecanismos para furar a fila do consórcio e ser contemplado em 3 a 6 meses.</p>
+          </div>
+        </div>
+        <div class="learn-item reveal reveal-delay-1">
+          <span class="learn-num">03</span>
+          <div>
+            <p class="learn-title">Leilão + Consórcio = Alavancagem</p>
+            <p class="learn-desc">Como combinar os dois para multiplicar patrimônio sem precisar de capital extra ou financiamento.</p>
+          </div>
+        </div>
+        <div class="learn-item reveal reveal-delay-2">
+          <span class="learn-num">04</span>
+          <div>
+            <p class="learn-title">O "troco" que financia o próximo</p>
+            <p class="learn-desc">O mecanismo automático que usa a diferença do arremate para reiniciar o ciclo — sem gastar um centavo a mais.</p>
+          </div>
+        </div>
+        <div class="learn-item reveal reveal-delay-1">
+          <span class="learn-num">05</span>
+          <div>
+            <p class="learn-title">Semeador, Estrategista ou Acelerador</p>
+            <p class="learn-desc">Descubra qual perfil você é e qual é o próximo passo exato para o seu estágio — sem tentar pular etapas.</p>
+          </div>
+        </div>
+        <div class="learn-item reveal reveal-delay-2">
+          <span class="learn-num">06</span>
+          <div>
+            <p class="learn-title">Simulação ao vivo: 20 imóveis em 20 anos</p>
+            <p class="learn-desc">Montaremos juntos a projeção de patrimônio com 88% de probabilidade de sucesso — usando Monte Carlo em tempo real.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── SOBRE ANTHONY ── -->
+  <section id="sobre">
+    <div class="section-inner">
+      <div class="sobre-grid">
+        <div class="sobre-photo-wrap reveal">
+          <img
+            src="https://codigo31.anthonymiranda.com.br/img/anthony-miranda.webp"
+            alt="Anthony Miranda"
+            class="sobre-photo"
+          />
+        </div>
+        <div>
+          <p class="eyebrow reveal">QUEM É ANTHONY MIRANDA</p>
+          <h2 class="sobre-title reveal reveal-delay-1">Fundador da <em>Yes Consórcios.</em></h2>
+          <div class="sobre-stats reveal reveal-delay-1">
+            <div class="sobre-stat">
+              <span class="sobre-stat-num">R$1,5Bi</span>
+              <span class="sobre-stat-label">em créditos movimentados</span>
+            </div>
+            <div class="sobre-stat">
+              <span class="sobre-stat-num">+1M</span>
+              <span class="sobre-stat-label">seguidores</span>
+            </div>
+            <div class="sobre-stat">
+              <span class="sobre-stat-num">+15K</span>
+              <span class="sobre-stat-label">famílias atendidas</span>
+            </div>
+            <div class="sobre-stat">
+              <span class="sobre-stat-num">9.5/10</span>
+              <span class="sobre-stat-label">NPS</span>
+            </div>
+          </div>
+          <div class="sobre-text reveal reveal-delay-2">
+            <p>Anthony Miranda saiu de uma casinha de R$320 de aluguel — com rato entrando por baixo da porta — para movimentar mais de R$1,5 bilhão em consórcios e leilões.</p>
+            <p>Fundador da Yes Consórcios e da plataforma Arremata.ai, ele transformou um método que criou por necessidade num sistema replicável para qualquer família brasileira.</p>
+            <p>Com mais de 1 milhão de seguidores e NPS de 9.5, <strong>Anthony ensina que a diferença entre ter e não ter um imóvel não é a renda — é a estratégia.</strong></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── BÔNUS ── -->
+  <section id="bonus">
+    <div class="section-inner">
+      <div class="section-header reveal">
+        <p class="eyebrow">PARA QUEM AGIR DURANTE O EVENTO</p>
+        <h2 class="section-title">Reserva durante a live. Dois bônus <em>exclusivos.</em></h2>
+      </div>
+
+      <div class="bonus-grid">
+        <div class="bonus-card reveal reveal-delay-1">
+          <span class="bonus-badge">BÔNUS 01</span>
+          <h3 class="bonus-title">3 meses de Arremata.ai</h3>
+          <p class="bonus-desc">
+            Acesso completo à plataforma que monitora leilões judiciais e extrajudiciais em todo Brasil. Filtre por localização, valor e desconto. Encontre o imóvel certo antes de todo mundo.
+          </p>
+          <p class="bonus-value">Valor: <s>R$203/mês</s> — incluído na reserva</p>
+        </div>
+        <div class="bonus-card reveal reveal-delay-2">
+          <span class="bonus-badge">BÔNUS 02</span>
+          <h3 class="bonus-title">Curso DAP Completo</h3>
+          <p class="bonus-desc">
+            Dono de Ativos Permanentes: o método completo em vídeo aulas. Aprenda cada etapa do processo — da cota ao arremate — no seu ritmo, com acesso vitalício.
+          </p>
+          <p class="bonus-value">Disponível exclusivamente para quem reservar durante a live</p>
+        </div>
+      </div>
+
+      <div class="price-callout reveal">
+        <p class="price-callout-label">Reserva durante o evento</p>
+        <div class="price-callout-num">R$69</div>
+        <p class="price-callout-note">Disponível apenas durante a transmissão ao vivo. Evento em si: 100% gratuito.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── DEPOIMENTOS ── -->
+  <section id="depoimentos">
+    <div class="section-inner">
+      <div class="section-header reveal">
+        <p class="eyebrow">QUEM JÁ APLICOU O MÉTODO</p>
+        <h2 class="section-title">Resultados <em>reais</em> de famílias reais.</h2>
+      </div>
+
+      <div class="depo-grid">
+        <div class="depo-card reveal reveal-delay-1">
+          <div class="depo-stars">★★★★★</div>
+          <p class="depo-text">
+            "Pagava R$1.200 de aluguel há 6 anos. Depois da live do Anthony, entrei num consórcio de R$280K. Em 4 meses fui contemplado com lance embutido. Hoje o imóvel é meu e pago menos do que pagava de aluguel."
+          </p>
+          <p class="depo-name">Rodrigo Almeida</p>
+          <p class="depo-info">São Paulo, SP · Semeador</p>
+        </div>
+        <div class="depo-card reveal reveal-delay-2">
+          <div class="depo-stars">★★★★★</div>
+          <p class="depo-text">
+            "Comprei um apartamento no leilão por R$198K com carta de R$300K. Diferença de R$102K virou entrada do próximo consórcio. Agora tenho dois imóveis e não paguei nada além da mensalidade."
+          </p>
+          <p class="depo-name">Fernanda Costa</p>
+          <p class="depo-info">Belo Horizonte, MG · Estrategista</p>
+        </div>
+        <div class="depo-card reveal reveal-delay-3">
+          <div class="depo-stars">★★★★★</div>
+          <p class="depo-text">
+            "Estava com o nome sujo e achando que nunca ia ter imóvel. O Anthony mostrou que consórcio não passa pelo SPC. Em 8 meses estava contemplado. Hoje tenho 3 imóveis alugados gerando renda passiva."
+          </p>
+          <p class="depo-name">Carlos Eduardo</p>
+          <p class="depo-info">Curitiba, PR · Acelerador</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FAQ ── -->
+  <section id="faq">
+    <div class="section-inner section-inner--sm">
+      <div class="section-header reveal">
+        <p class="eyebrow">PERGUNTAS FREQUENTES</p>
+        <h2 class="section-title">Tudo que você quer <em>saber antes</em> de começar.</h2>
+      </div>
+
+      <div class="faq-list">
+        <div class="faq-item reveal">
+          <button class="faq-question" onclick="toggleFaq(this)">
+            <span class="faq-q-text">O evento é realmente gratuito?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              <strong>Sim, 100% gratuito.</strong> A live é aberta e sem custo. Durante o evento, quem quiser reservar a oferta especial (bônus + material) tem acesso por R$69 — mas isso é opcional. Você pode assistir, aprender e sair sem pagar nada.
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item reveal">
+          <button class="faq-question" onclick="toggleFaq(this)">
+            <span class="faq-q-text">Preciso ter dinheiro guardado para começar?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              <strong>Não precisa de entrada.</strong> O consórcio é justamente o mecanismo que permite começar sem capital acumulado. Com R$764/mês você já entra numa cota de R$300K. O lance embutido é descontado do próprio crédito — sem precisar ter o dinheiro antes.
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item reveal">
+          <button class="faq-question" onclick="toggleFaq(this)">
+            <span class="faq-q-text">E se meu nome estiver sujo? Posso fazer consórcio?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              <strong>Sim.</strong> O consórcio não consulta SPC/Serasa para a adesão. A análise de crédito acontece apenas no momento da contemplação — e até lá você tem tempo para regularizar a situação. Muita gente começa exatamente nessa condição.
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item reveal">
+          <button class="faq-question" onclick="toggleFaq(this)">
+            <span class="faq-q-text">Quanto tempo leva para ser contemplado?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              Depende da estratégia. No sorteio puro pode levar vários meses. Mas com <strong>lance embutido ou fidelidade</strong>, a maioria dos participantes que aprende o método de Anthony consegue contemplação entre <strong>3 e 6 meses</strong>. Na live, mostramos o passo a passo.
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item reveal">
+          <button class="faq-question" onclick="toggleFaq(this)">
+            <span class="faq-q-text">O que é leilão judicial e como funciona?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              Leilão judicial é quando um imóvel é penhorado por dívida e leiloado pelo poder judiciário. Os preços chegam a <strong>30–60% abaixo do valor de mercado</strong>. Com a carta de crédito do consórcio, você compra esses imóveis sem precisar de financiamento bancário — e ainda sai com troco.
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item reveal">
+          <button class="faq-question" onclick="toggleFaq(this)">
+            <span class="faq-q-text">A live é gravada? Posso assistir depois?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              O evento é <strong>ao vivo</strong> e tem uma dinâmica única — incluindo simulação em tempo real e a oferta especial disponível apenas durante a transmissão. Quem assiste ao vivo tem acesso a tudo. Gravação pode ser disponibilizada para inscritos, mas sem garantia.
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item reveal">
+          <button class="faq-question" onclick="toggleFaq(this)">
+            <span class="faq-q-text">Isso funciona em qualquer cidade do Brasil?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              <strong>Sim.</strong> Consórcio e leilão são mecanismos que funcionam em todo o território nacional. Temos alunos em todas as regiões do Brasil — de capitais a cidades do interior. O método é o mesmo. A execução adapta para sua realidade local.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CTA FINAL ── -->
+  <section id="cta-final">
+    <div class="cta-final-inner">
+      <div class="hero-glow" style="top:-100px;"></div>
+      <p class="eyebrow reveal" style="margin-bottom:16px;">A DECISÃO É AGORA</p>
+      <h2 class="cta-final-title reveal reveal-delay-1">
+        Daqui a 20 anos, qual dos dois <em>você vai ser?</em>
+      </h2>
+      <p class="cta-final-body reveal reveal-delay-2">
+        João ainda paga aluguel. Maria tem 3 imóveis. A diferença foi uma decisão — tomada numa live de 4 horas.
+      </p>
+
+      <div class="cta-form-box reveal reveal-delay-2">
+        <h3 class="hero-form-title" style="margin-bottom:6px;">Garantir minha <em>vaga gratuita</em></h3>
+        <p class="hero-form-sub">Última chance antes da live fechar</p>
+        <form id="form-bottom-el" onsubmit="submitForm(event,'form-bottom-el','form-bottom-success')">
+          <div class="form-field">
+            <label>Seu nome</label>
+            <input type="text" name="name" placeholder="Como posso te chamar?" required />
+          </div>
+          <div class="form-field">
+            <label>WhatsApp</label>
+            <input type="tel" name="phone" placeholder="(11) 99999-9999" required />
+          </div>
+          <button type="submit" class="btn-gold btn-gold--lg form-submit">
+            GARANTIR MINHA VAGA GRATUITA →
+          </button>
+        </form>
+        <div class="form-success" id="form-bottom-success">
+          <div class="form-success-icon">✓</div>
+          <p class="form-success-text">Vaga garantida! Você receberá o link de acesso no WhatsApp.</p>
+        </div>
+        <p class="form-note">100% gratuito · Ao vivo · Vagas limitadas</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ── -->
+  <footer>
+    <p class="footer-text">© 2026 Anthony Miranda · Yes Consórcios · Todos os direitos reservados</p>
+  </footer>
+
+  <!-- ══════════════════════════════════
+       JAVASCRIPT
+  ══════════════════════════════════ -->
+  <script>
+    /* ── STICKY BAR ── */
+    const stickyBar = document.getElementById('sticky-bar');
+    const heroSection = document.getElementById('hero');
+    const heroObserver = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) {
+          stickyBar.classList.add('visible');
+        } else {
+          stickyBar.classList.remove('visible');
+        }
+      },
+      { threshold: 0.1 }
+    );
+    heroObserver.observe(heroSection);
+
+    /* ── REVEAL ANIMATIONS ── */
+    const reveals = document.querySelectorAll('.reveal');
+    const revealObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            revealObserver.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.12, rootMargin: '0px 0px -40px 0px' }
+    );
+    reveals.forEach(el => revealObserver.observe(el));
+
+    /* ── COUNTDOWN ── */
+    function getNextEventDate() {
+      const now = new Date();
+      function lastTuesdayOf(year, month) {
+        const lastDay = new Date(year, month + 1, 0);
+        const day = lastDay.getDay();
+        const diff = (day >= 2) ? day - 2 : day + 5;
+        return new Date(year, month, lastDay.getDate() - diff, 20, 0, 0);
+      }
+      let d = lastTuesdayOf(now.getFullYear(), now.getMonth());
+      if (d <= now) d = lastTuesdayOf(now.getFullYear(), now.getMonth() + 1);
+      return d;
+    }
+
+    function pad(n) { return String(n).padStart(2, '0'); }
+
+    function updateCountdown() {
+      const target = getNextEventDate();
+      const now = new Date();
+      let diff = Math.max(0, target - now);
+
+      const days = Math.floor(diff / 86400000); diff -= days * 86400000;
+      const hours = Math.floor(diff / 3600000); diff -= hours * 3600000;
+      const mins = Math.floor(diff / 60000); diff -= mins * 60000;
+      const secs = Math.floor(diff / 1000);
+
+      document.getElementById('cd-days').textContent = pad(days);
+      document.getElementById('cd-hours').textContent = pad(hours);
+      document.getElementById('cd-min').textContent = pad(mins);
+      document.getElementById('cd-sec').textContent = pad(secs);
+    }
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+
+    /* ── FAQ ACCORDION ── */
+    function toggleFaq(btn) {
+      const item = btn.closest('.faq-item');
+      const answer = item.querySelector('.faq-answer');
+      const isOpen = item.classList.contains('open');
+
+      // close all
+      document.querySelectorAll('.faq-item.open').forEach(openItem => {
+        openItem.classList.remove('open');
+        openItem.querySelector('.faq-answer').style.maxHeight = null;
+      });
+
+      if (!isOpen) {
+        item.classList.add('open');
+        answer.style.maxHeight = answer.scrollHeight + 'px';
+      }
+    }
+
+    /* ── BREVO FORM ── */
+    const BREVO_API_KEY = 'BREVO_API_KEY';
+    const BREVO_LIST_ID = 31;
+
+    function normalizePhone(raw) {
+      return raw.replace(/\D/g, '');
+    }
+
+    async function submitForm(e, formId, successId) {
+      e.preventDefault();
+      const form = document.getElementById(formId);
+      const successBox = document.getElementById(successId);
+      const btn = form.querySelector('button[type="submit"]');
+
+      const name = form.querySelector('input[name="name"]').value.trim();
+      const phone = normalizePhone(form.querySelector('input[name="phone"]').value);
+      const email = phone + '@codigo31.grupomirandas.com.br';
+
+      btn.textContent = 'Enviando...';
+      btn.disabled = true;
+
+      try {
+        const res = await fetch('https://api.brevo.com/v3/contacts', {
+          method: 'POST',
+          headers: {
+            'api-key': BREVO_API_KEY,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            email,
+            firstName: name,
+            attributes: { PHONE: phone, FIRSTNAME: name },
+            listIds: [BREVO_LIST_ID],
+            updateEnabled: true
+          })
+        });
+
+        if (res.ok || res.status === 204 || res.status === 201 || res.status === 400) {
+          // 400 can mean "already exists" — still show success
+          form.style.display = 'none';
+          successBox.style.display = 'block';
+
+          // VK Pixel event
+          if (window.vkPixel) {
+            window.vkPixel._q.push(['event', 'lead']);
+          }
+        } else {
+          throw new Error('API error ' + res.status);
+        }
+      } catch (err) {
+        console.error(err);
+        btn.textContent = 'GARANTIR MINHA VAGA GRATUITA →';
+        btn.disabled = false;
+        alert('Ocorreu um erro. Tente novamente ou entre em contato pelo WhatsApp.');
+      }
+    }
+  </script>
+
+</body>
+</html>

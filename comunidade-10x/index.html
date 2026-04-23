@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Comunidade 10x — O método que 15 mil famílias usaram</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          'brand-orange': '#F97316',
+          'brand-beige': '#F5F0E8'
+        },
+        fontFamily: {
+          sans: ['Inter', 'system-ui', 'sans-serif']
+        }
+      }
+    }
+  }
+</script>
+<style>
+  body { font-family: 'Inter', system-ui, sans-serif; }
+  .glow-orange { box-shadow: 0 0 40px rgba(249,115,22,0.3); }
+  .card-hover { transition: all 0.2s; }
+  .card-hover:hover { border-color: rgba(249,115,22,0.4); transform: translateY(-2px); }
+  @keyframes pulse-slow { 0%,100%{opacity:1} 50%{opacity:.7} }
+  .pulse-slow { animation: pulse-slow 2s infinite; }
+  @keyframes fadein { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+  .fadein { animation: fadein 0.6s ease forwards; }
+  .profile-card { transition: all 0.2s; border: 1px solid rgba(255,255,255,0.06); }
+  .profile-card:hover { border-color: rgba(249,115,22,0.4); }
+  .step-connector { position: relative; }
+  .step-connector::after { content: '↓'; position: absolute; bottom: -28px; left: 50%; transform: translateX(-50%); color: #F97316; font-size: 1.5rem; font-weight: 900; }
+  .quote-border { border-left: 4px solid #F97316; }
+  .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+</style>
+</head>
+<body class="bg-zinc-950 text-white">
+
+<!-- TOPBAR -->
+<div class="fixed top-0 left-0 right-0 z-50 bg-brand-orange text-white text-center py-2 text-sm font-semibold tracking-wide">
+  🔴 ACESSO IMEDIATO &nbsp;·&nbsp; COMUNIDADE 10X &nbsp;·&nbsp; MÉTODO COMPLETO &nbsp;·&nbsp; GARANTIA 7 DIAS
+</div>
+
+<!-- HERO -->
+<section class="min-h-screen bg-gradient-to-b from-zinc-900 to-zinc-950 flex items-center justify-center pt-24 pb-20 px-4">
+  <div class="max-w-4xl mx-auto text-center reveal">
+    <!-- Badge -->
+    <div class="inline-flex items-center gap-2 bg-brand-orange/10 border border-brand-orange/30 text-brand-orange rounded-full px-5 py-2 text-sm font-semibold mb-8">
+      Movimento dos Donos · Comunidade 10x
+    </div>
+    <!-- H1 -->
+    <h1 class="font-black uppercase leading-none mb-6">
+      <span class="text-6xl md:text-7xl block">+15 MIL FAMÍLIAS</span>
+      <span class="text-6xl md:text-7xl block">JÁ COMPRARAM</span>
+      <span class="text-6xl md:text-7xl block text-brand-orange">O PRIMEIRO IMÓVEL.</span>
+      <span class="text-4xl block text-zinc-400 mt-2">Você é o próximo.</span>
+    </h1>
+    <!-- Subtext -->
+    <p class="text-zinc-400 text-lg max-w-2xl mx-auto mb-10 leading-relaxed">
+      O método completo: leilão, consórcio, jurídico, tributário, contabilidade, alavancagem. Tudo que Anthony Miranda usou para ajudar +15 mil famílias — em um único lugar.
+    </p>
+    <!-- Social proof -->
+    <div class="flex flex-wrap justify-center gap-8 mb-10">
+      <div class="text-center">
+        <div class="text-2xl font-black text-brand-orange">+15K</div>
+        <div class="text-zinc-400 text-sm">famílias</div>
+      </div>
+      <div class="text-center">
+        <div class="text-2xl font-black text-brand-orange">R$900M</div>
+        <div class="text-zinc-400 text-sm">arremates</div>
+      </div>
+      <div class="text-center">
+        <div class="text-2xl font-black text-brand-orange">9.5/10</div>
+        <div class="text-zinc-400 text-sm">NPS</div>
+      </div>
+      <div class="text-center">
+        <div class="text-2xl font-black text-brand-orange">7 dias</div>
+        <div class="text-zinc-400 text-sm">garantia</div>
+      </div>
+    </div>
+    <!-- Price + CTA -->
+    <div class="flex flex-col items-center gap-4">
+      <div class="text-zinc-400 text-lg">
+        De <s class="text-zinc-600">R$13.188</s> por <span class="text-white font-bold text-2xl">R$3.497</span>
+      </div>
+      <a href="#" class="inline-block bg-brand-orange hover:bg-orange-600 text-white font-black text-xl px-10 py-5 rounded-xl glow-orange transition-all duration-200 hover:scale-105 uppercase tracking-wide">
+        QUERO ENTRAR NA COMUNIDADE →
+      </a>
+      <p class="text-zinc-500 text-sm">🔒 Garantia de 7 dias · Acesso imediato · Parcela em 12x de R$291</p>
+    </div>
+  </div>
+</section>
+
+<!-- PROBLEMA -->
+<section class="bg-zinc-900 py-24 px-4">
+  <div class="max-w-5xl mx-auto">
+    <div class="text-center mb-16 reveal">
+      <div class="text-brand-orange text-sm font-semibold uppercase tracking-widest mb-4">Por que a maioria nunca compra</div>
+      <h2 class="text-4xl md:text-5xl font-black uppercase leading-tight">
+        96% DAS PESSOAS MORREM SEM<br>
+        <span class="text-brand-orange">NENHUM IMÓVEL PRÓPRIO.</span>
+      </h2>
+    </div>
+    <div class="grid md:grid-cols-3 gap-6">
+      <div class="bg-zinc-950 border border-zinc-800 rounded-2xl p-8 card-hover reveal">
+        <div class="text-red-500 text-2xl font-black mb-4">✗</div>
+        <h3 class="text-white font-bold text-lg mb-3">Não sabem como comprar</h3>
+        <p class="text-zinc-400 leading-relaxed">Financiamento exige 20–30% de entrada que nunca juntam. Consórcio parece complicado. Leilão dá medo.</p>
+      </div>
+      <div class="bg-zinc-950 border border-zinc-800 rounded-2xl p-8 card-hover reveal">
+        <div class="text-red-500 text-2xl font-black mb-4">✗</div>
+        <h3 class="text-white font-bold text-lg mb-3">Sem método</h3>
+        <p class="text-zinc-400 leading-relaxed">Cursos genéricos não ensinam o mecanismo real. Ninguém mostrou como o consórcio + leilão se somam.</p>
+      </div>
+      <div class="bg-zinc-950 border border-zinc-800 rounded-2xl p-8 card-hover reveal">
+        <div class="text-red-500 text-2xl font-black mb-4">✗</div>
+        <h3 class="text-white font-bold text-lg mb-3">Sem comunidade</h3>
+        <p class="text-zinc-400 leading-relaxed">Sozinho é difícil. Sem pessoas que já fizeram, sem mentoria, sem suporte — o caminho parece longo demais.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SOLUÇÃO — 3 PASSOS -->
+<section class="bg-zinc-950 py-24 px-4">
+  <div class="max-w-4xl mx-auto">
+    <div class="text-center mb-16 reveal">
+      <div class="text-brand-orange text-sm font-semibold uppercase tracking-widest mb-4">O mecanismo</div>
+      <h2 class="text-4xl md:text-5xl font-black uppercase leading-tight">
+        O MÉTODO QUE<br>
+        <span class="text-brand-orange">NENHUM BANCO</span><br>
+        TE ENSINA
+      </h2>
+    </div>
+    <div class="flex flex-col gap-16 mb-16">
+      <!-- Step 1 -->
+      <div class="bg-zinc-900 border border-zinc-800 rounded-2xl p-8 step-connector reveal">
+        <div class="flex items-start gap-6">
+          <div class="bg-brand-orange text-white font-black text-2xl w-14 h-14 rounded-xl flex items-center justify-center shrink-0">1</div>
+          <div>
+            <h3 class="text-white font-black text-xl mb-2">Consórcio como entrada</h3>
+            <p class="text-zinc-400 leading-relaxed">R$300K pagando R$764/mês. Lance embutido = contemplação em 3–6 meses. Zero banco.</p>
+          </div>
+        </div>
+      </div>
+      <!-- Step 2 -->
+      <div class="bg-zinc-900 border border-zinc-800 rounded-2xl p-8 step-connector reveal">
+        <div class="flex items-start gap-6">
+          <div class="bg-brand-orange text-white font-black text-2xl w-14 h-14 rounded-xl flex items-center justify-center shrink-0">2</div>
+          <div>
+            <h3 class="text-white font-black text-xl mb-2">Arremata no leilão</h3>
+            <p class="text-zinc-400 leading-relaxed">Carta de crédito + leilão = imóvel R$500K por R$300K. 30–60% de desconto real.</p>
+          </div>
+        </div>
+      </div>
+      <!-- Step 3 -->
+      <div class="bg-zinc-900 border border-zinc-800 rounded-2xl p-8 reveal">
+        <div class="flex items-start gap-6">
+          <div class="bg-brand-orange text-white font-black text-2xl w-14 h-14 rounded-xl flex items-center justify-center shrink-0">3</div>
+          <div>
+            <h3 class="text-white font-black text-xl mb-2">O "troco" multiplica</h3>
+            <p class="text-zinc-400 leading-relaxed">A diferença vira entrada do próximo consórcio. 1 imóvel vira 5 sem injetar mais dinheiro.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Monte Carlo callout -->
+    <div class="bg-brand-orange/10 border border-brand-orange/20 rounded-2xl p-8 text-center reveal">
+      <p class="text-white font-bold text-xl leading-relaxed">
+        "88% de probabilidade de acumular 20 imóveis em 20 anos —<br class="hidden md:block"> com 10.000 cenários simulados."
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- O QUE ESTÁ INCLUSO -->
+<section class="bg-zinc-900 py-24 px-4">
+  <div class="max-w-5xl mx-auto">
+    <div class="text-center mb-16 reveal">
+      <div class="text-brand-orange text-sm font-semibold uppercase tracking-widest mb-4">O que você recebe</div>
+      <h2 class="text-4xl md:text-5xl font-black uppercase leading-tight">
+        TUDO QUE VOCÊ PRECISA<br>
+        <span class="text-brand-orange">EM UM ÚNICO LUGAR</span>
+      </h2>
+    </div>
+    <div class="grid grid-cols-2 md:grid-cols-3 gap-6">
+      <div class="bg-zinc-950 border border-zinc-800 rounded-2xl p-6 card-hover reveal">
+        <div class="text-3xl mb-4">🔑</div>
+        <h3 class="text-white font-bold text-base mb-2">Método Completo</h3>
+        <p class="text-zinc-400 text-sm leading-relaxed">O passo a passo desde a primeira cota até o portfólio</p>
+      </div>
+      <div class="bg-zinc-950 border border-zinc-800 rounded-2xl p-6 card-hover reveal">
+        <div class="text-3xl mb-4">🤝</div>
+        <h3 class="text-white font-bold text-base mb-2">Comunidade Ativa</h3>
+        <p class="text-zinc-400 text-sm leading-relaxed">Grupo no Telegram com membros que já compraram</p>
+      </div>
+      <div class="bg-zinc-950 border border-zinc-800 rounded-2xl p-6 card-hover reveal">
+        <div class="text-3xl mb-4">🎥</div>
+        <h3 class="text-white font-bold text-base mb-2">2 Aulas Ao Vivo/Semana</h3>
+        <p class="text-zinc-400 text-sm leading-relaxed">Anthony Miranda ao vivo toda semana</p>
+      </div>
+      <div class="bg-zinc-950 border border-zinc-800 rounded-2xl p-6 card-hover reveal">
+        <div class="text-3xl mb-4">🔍</div>
+        <h3 class="text-white font-bold text-base mb-2">1 Ano Arremata.ai</h3>
+        <p class="text-zinc-400 text-sm leading-relaxed">Plataforma de monitoramento de leilões (R$203/mês de valor)</p>
+      </div>
+      <div class="bg-zinc-950 border border-zinc-800 rounded-2xl p-6 card-hover reveal">
+        <div class="text-3xl mb-4">📋</div>
+        <h3 class="text-white font-bold text-base mb-2">Suporte Dedicado</h3>
+        <p class="text-zinc-400 text-sm leading-relaxed">Tire dúvidas diretamente com a equipe</p>
+      </div>
+      <div class="bg-zinc-950 border border-zinc-800 rounded-2xl p-6 card-hover reveal">
+        <div class="text-3xl mb-4">📄</div>
+        <h3 class="text-white font-bold text-base mb-2">Documentário</h3>
+        <p class="text-zinc-400 text-sm leading-relaxed">3 episódios cinematográficos do método</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GRADE CURRICULAR -->
+<section class="bg-zinc-950 py-24 px-4">
+  <div class="max-w-5xl mx-auto">
+    <div class="text-center mb-16 reveal">
+      <div class="text-brand-orange text-sm font-semibold uppercase tracking-widest mb-4">Grade curricular</div>
+      <h2 class="text-4xl md:text-5xl font-black uppercase leading-tight">
+        8 MÓDULOS QUE<br>
+        <span class="text-brand-orange">COBREM TUDO</span>
+      </h2>
+    </div>
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+      <div class="bg-zinc-900 border border-zinc-800 rounded-2xl p-6 card-hover reveal">
+        <div class="text-brand-orange font-black text-sm mb-2">01</div>
+        <div class="text-2xl mb-3">🏚</div>
+        <h3 class="text-white font-bold text-sm mb-2">Leilão Completo</h3>
+        <p class="text-zinc-500 text-xs leading-relaxed">Como encontrar, avaliar e arrematar imóveis com segurança</p>
+      </div>
+      <div class="bg-zinc-900 border border-zinc-800 rounded-2xl p-6 card-hover reveal">
+        <div class="text-brand-orange font-black text-sm mb-2">02</div>
+        <div class="text-2xl mb-3">📋</div>
+        <h3 class="text-white font-bold text-sm mb-2">Consórcio</h3>
+        <p class="text-zinc-500 text-xs leading-relaxed">Lance embutido, fidelidade, contemplação acelerada</p>
+      </div>
+      <div class="bg-zinc-900 border border-zinc-800 rounded-2xl p-6 card-hover reveal">
+        <div class="text-brand-orange font-black text-sm mb-2">03</div>
+        <div class="text-2xl mb-3">⚖️</div>
+        <h3 class="text-white font-bold text-sm mb-2">Jurídico</h3>
+        <p class="text-zinc-500 text-xs leading-relaxed">Documentação, riscos, contratos, regularização</p>
+      </div>
+      <div class="bg-zinc-900 border border-zinc-800 rounded-2xl p-6 card-hover reveal">
+        <div class="text-brand-orange font-black text-sm mb-2">04</div>
+        <div class="text-2xl mb-3">📊</div>
+        <h3 class="text-white font-bold text-sm mb-2">Contabilidade</h3>
+        <p class="text-zinc-500 text-xs leading-relaxed">Como estruturar o patrimônio com eficiência fiscal</p>
+      </div>
+      <div class="bg-zinc-900 border border-zinc-800 rounded-2xl p-6 card-hover reveal">
+        <div class="text-brand-orange font-black text-sm mb-2">05</div>
+        <div class="text-2xl mb-3">💰</div>
+        <h3 class="text-white font-bold text-sm mb-2">Tributário</h3>
+        <p class="text-zinc-500 text-xs leading-relaxed">Imposto de renda, ITBI, ganho de capital, otimização</p>
+      </div>
+      <div class="bg-zinc-900 border border-zinc-800 rounded-2xl p-6 card-hover reveal">
+        <div class="text-brand-orange font-black text-sm mb-2">06</div>
+        <div class="text-2xl mb-3">🌎</div>
+        <h3 class="text-white font-bold text-sm mb-2">Imóveis nos EUA</h3>
+        <p class="text-zinc-500 text-xs leading-relaxed">Oportunidades internacionais, FL e TX</p>
+      </div>
+      <div class="bg-zinc-900 border border-zinc-800 rounded-2xl p-6 card-hover reveal">
+        <div class="text-brand-orange font-black text-sm mb-2">07</div>
+        <div class="text-2xl mb-3">🏗</div>
+        <h3 class="text-white font-bold text-sm mb-2">Loteamento</h3>
+        <p class="text-zinc-500 text-xs leading-relaxed">Compra, parcelamento, valorização de terrenos</p>
+      </div>
+      <div class="bg-zinc-900 border border-zinc-800 rounded-2xl p-6 card-hover reveal">
+        <div class="text-brand-orange font-black text-sm mb-2">08</div>
+        <div class="text-2xl mb-3">🚀</div>
+        <h3 class="text-white font-bold text-sm mb-2">Alavancagem</h3>
+        <p class="text-zinc-500 text-xs leading-relaxed">Como usar o "troco" para multiplicar o portfólio</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PARA QUEM É -->
+<section class="bg-zinc-900 py-24 px-4">
+  <div class="max-w-4xl mx-auto">
+    <div class="text-center mb-16 reveal">
+      <h2 class="text-4xl md:text-5xl font-black uppercase leading-tight">
+        ESSE MÉTODO É PARA VOCÊ?
+      </h2>
+    </div>
+    <div class="grid md:grid-cols-2 gap-8">
+      <!-- SIM -->
+      <div class="bg-zinc-950 border border-green-500/30 rounded-2xl p-8 reveal">
+        <div class="text-green-500 font-black text-lg mb-6 uppercase tracking-wide">✓ SIM, é para você se...</div>
+        <ul class="space-y-4">
+          <li class="flex items-start gap-3">
+            <span class="text-green-500 font-bold mt-0.5">✓</span>
+            <span class="text-zinc-300">Quer comprar primeiro imóvel sem banco</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <span class="text-green-500 font-bold mt-0.5">✓</span>
+            <span class="text-zinc-300">Quer parar de pagar aluguel</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <span class="text-green-500 font-bold mt-0.5">✓</span>
+            <span class="text-zinc-300">Quer montar portfólio imobiliário</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <span class="text-green-500 font-bold mt-0.5">✓</span>
+            <span class="text-zinc-300">Quer renda passiva imobiliária</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <span class="text-green-500 font-bold mt-0.5">✓</span>
+            <span class="text-zinc-300">Tem R$394/mês disponíveis</span>
+          </li>
+        </ul>
+      </div>
+      <!-- NÃO -->
+      <div class="bg-zinc-950 border border-red-500/30 rounded-2xl p-8 reveal">
+        <div class="text-red-500 font-black text-lg mb-6 uppercase tracking-wide">✗ NÃO é para você se...</div>
+        <ul class="space-y-4">
+          <li class="flex items-start gap-3">
+            <span class="text-red-500 font-bold mt-0.5">✗</span>
+            <span class="text-zinc-400">Quer fórmula mágica sem esforço</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <span class="text-red-500 font-bold mt-0.5">✗</span>
+            <span class="text-zinc-400">Espera resultado em 30 dias</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <span class="text-red-500 font-bold mt-0.5">✗</span>
+            <span class="text-zinc-400">Não quer aprender o método</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <span class="text-red-500 font-bold mt-0.5">✗</span>
+            <span class="text-zinc-400">Já tem patrimônio suficiente</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SOBRE ANTHONY -->
+<section class="bg-zinc-950 py-24 px-4">
+  <div class="max-w-5xl mx-auto">
+    <div class="grid md:grid-cols-2 gap-16 items-center">
+      <!-- Text -->
+      <div class="reveal">
+        <div class="text-brand-orange text-sm font-semibold uppercase tracking-widest mb-4">Quem é Anthony Miranda</div>
+        <h2 class="text-4xl font-black uppercase leading-tight mb-6">
+          CONSTRUTOR DE<br>
+          <span class="text-brand-orange">PATRIMÔNIO.</span><br>
+          NÃO GURU.
+        </h2>
+        <p class="text-zinc-400 leading-relaxed mb-8">
+          Anthony Miranda movimentou mais de R$1,5 Bilhão em créditos imobiliários. Lidera o Movimento dos Donos — a maior comunidade de aquisição de imóveis por consórcio e leilão do Brasil. Não é guru de palco. É construtor de patrimônio que saiu de uma casinha de R$320 de aluguel.
+        </p>
+        <div class="grid grid-cols-2 gap-6">
+          <div>
+            <div class="text-2xl font-black text-brand-orange">R$1,5Bi</div>
+            <div class="text-zinc-500 text-sm">em créditos</div>
+          </div>
+          <div>
+            <div class="text-2xl font-black text-brand-orange">+1M</div>
+            <div class="text-zinc-500 text-sm">seguidores</div>
+          </div>
+          <div>
+            <div class="text-2xl font-black text-brand-orange">+15K</div>
+            <div class="text-zinc-500 text-sm">famílias atendidas</div>
+          </div>
+          <div>
+            <div class="text-2xl font-black text-brand-orange">9.5</div>
+            <div class="text-zinc-500 text-sm">NPS</div>
+          </div>
+        </div>
+      </div>
+      <!-- Photo -->
+      <div class="relative reveal">
+        <img
+          src="https://codigo31.anthonymiranda.com.br/img/anthony-miranda.webp"
+          alt="Anthony Miranda"
+          class="w-full rounded-2xl grayscale hover:grayscale-0 transition-all duration-500 object-cover"
+        >
+        <!-- Float card -->
+        <div class="absolute -bottom-6 -left-6 bg-brand-orange text-white rounded-xl px-6 py-4 glow-orange">
+          <div class="font-black text-lg">R$1,5Bi</div>
+          <div class="text-sm font-medium opacity-90">movimentados</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VALOR DETALHADO -->
+<section class="bg-zinc-900 py-24 px-4">
+  <div class="max-w-3xl mx-auto">
+    <div class="text-center mb-16 reveal">
+      <h2 class="text-4xl md:text-5xl font-black uppercase leading-tight">
+        TUDO QUE VOCÊ RECEBE<br>
+        <span class="text-brand-orange">NESSA ORDEM</span>
+      </h2>
+    </div>
+    <div class="bg-zinc-950 rounded-2xl overflow-hidden border border-zinc-800 reveal">
+      <table class="w-full">
+        <thead>
+          <tr class="border-b border-zinc-800">
+            <th class="text-left text-zinc-400 font-semibold text-sm px-6 py-4">Item</th>
+            <th class="text-right text-zinc-400 font-semibold text-sm px-6 py-4">Valor</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="border-b border-zinc-800/50 hover:bg-zinc-900/50 transition-colors">
+            <td class="px-6 py-4 text-white">8 Módulos (Leilão, Consórcio, Jurídico...)</td>
+            <td class="px-6 py-4 text-right text-zinc-300 font-medium">R$4.997</td>
+          </tr>
+          <tr class="border-b border-zinc-800/50 hover:bg-zinc-900/50 transition-colors">
+            <td class="px-6 py-4 text-white">1 Ano Arremata.ai (R$203/mês)</td>
+            <td class="px-6 py-4 text-right text-zinc-300 font-medium">R$2.436</td>
+          </tr>
+          <tr class="border-b border-zinc-800/50 hover:bg-zinc-900/50 transition-colors">
+            <td class="px-6 py-4 text-white">2 Aulas ao Vivo por Semana (52 aulas)</td>
+            <td class="px-6 py-4 text-right text-zinc-300 font-medium">R$2.600</td>
+          </tr>
+          <tr class="border-b border-zinc-800/50 hover:bg-zinc-900/50 transition-colors">
+            <td class="px-6 py-4 text-white">Suporte Dedicado</td>
+            <td class="px-6 py-4 text-right text-zinc-300 font-medium">R$997</td>
+          </tr>
+          <tr class="border-b border-zinc-800/50 hover:bg-zinc-900/50 transition-colors">
+            <td class="px-6 py-4 text-white">Comunidade Telegram</td>
+            <td class="px-6 py-4 text-right text-zinc-300 font-medium">R$497</td>
+          </tr>
+          <tr class="border-b border-zinc-800 hover:bg-zinc-900/50 transition-colors">
+            <td class="px-6 py-4 text-white">Documentário 3 Episódios</td>
+            <td class="px-6 py-4 text-right text-zinc-300 font-medium">R$661</td>
+          </tr>
+          <tr class="border-b border-zinc-800 bg-zinc-900">
+            <td class="px-6 py-4 text-zinc-400 font-semibold">TOTAL</td>
+            <td class="px-6 py-4 text-right text-zinc-400 font-semibold"><s>R$13.188</s></td>
+          </tr>
+          <tr class="bg-brand-orange/10">
+            <td class="px-6 py-5 text-white font-black text-lg">VOCÊ PAGA</td>
+            <td class="px-6 py-5 text-right text-brand-orange font-black text-2xl">R$3.497</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="text-center mt-10 reveal">
+      <a href="#" class="inline-block bg-brand-orange hover:bg-orange-600 text-white font-black text-xl px-10 py-5 rounded-xl glow-orange transition-all duration-200 hover:scale-105 uppercase tracking-wide">
+        ENTRAR NA COMUNIDADE POR R$3.497 →
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- GARANTIA -->
+<section class="bg-zinc-950 py-24 px-4">
+  <div class="max-w-2xl mx-auto text-center reveal">
+    <h2 class="text-4xl md:text-5xl font-black uppercase leading-tight mb-10">
+      GARANTIA DE<br>
+      <span class="text-brand-orange">7 DIAS</span>
+    </h2>
+    <div class="bg-zinc-900 border border-zinc-800 rounded-2xl p-10 card-hover">
+      <div class="text-6xl mb-6">🛡️</div>
+      <p class="text-zinc-300 text-lg leading-relaxed">
+        7 dias para testar. Se não gostar, devolvemos <strong class="text-white">100% do valor</strong>. Sem perguntas. Sem burocracia.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- DEPOIMENTOS -->
+<section class="bg-zinc-900 py-24 px-4">
+  <div class="max-w-5xl mx-auto">
+    <div class="text-center mb-16 reveal">
+      <div class="text-brand-orange text-sm font-semibold uppercase tracking-widest mb-4">Resultados reais</div>
+      <h2 class="text-4xl font-black uppercase">O QUE DIZEM OS MEMBROS</h2>
+    </div>
+    <div class="grid md:grid-cols-3 gap-6">
+      <div class="bg-zinc-950 border border-zinc-800 rounded-2xl p-8 card-hover reveal">
+        <div class="text-brand-orange text-lg mb-4">★★★★★</div>
+        <p class="text-zinc-300 leading-relaxed mb-6 quote-border pl-4">"Comprei meu primeiro imóvel 4 meses depois de entrar. O módulo de leilão mudou tudo."</p>
+        <div class="text-zinc-500 text-sm font-medium">— Membro, SP</div>
+      </div>
+      <div class="bg-zinc-950 border border-zinc-800 rounded-2xl p-8 card-hover reveal">
+        <div class="text-brand-orange text-lg mb-4">★★★★★</div>
+        <p class="text-zinc-300 leading-relaxed mb-6 quote-border pl-4">"O suporte é diferente de tudo que já vi. Qualquer dúvida, a equipe responde rápido."</p>
+        <div class="text-zinc-500 text-sm font-medium">— Membro, MG</div>
+      </div>
+      <div class="bg-zinc-950 border border-zinc-800 rounded-2xl p-8 card-hover reveal">
+        <div class="text-brand-orange text-lg mb-4">★★★★★</div>
+        <p class="text-zinc-300 leading-relaxed mb-6 quote-border pl-4">"Hoje tenho 2 imóveis. Antes pagava aluguel. O 'troco' do primeiro virou entrada do segundo."</p>
+        <div class="text-zinc-500 text-sm font-medium">— Membro, RJ</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="bg-zinc-900 py-24 px-4">
+  <div class="max-w-3xl mx-auto">
+    <div class="text-center mb-16 reveal">
+      <h2 class="text-4xl font-black uppercase">PERGUNTAS FREQUENTES</h2>
+    </div>
+    <div class="space-y-3 reveal">
+      <!-- FAQ Item 1 -->
+      <div class="bg-zinc-950 border border-zinc-800 rounded-xl overflow-hidden">
+        <button onclick="toggleFaq(this)" class="w-full text-left px-6 py-5 flex items-center justify-between font-semibold text-white hover:text-brand-orange transition-colors">
+          <span>Como funciona o acesso?</span>
+          <span class="faq-icon text-brand-orange text-xl font-black">+</span>
+        </button>
+        <div class="faq-body hidden px-6 pb-5 text-zinc-400 leading-relaxed">
+          Imediato após o pagamento. Você recebe email com login para a plataforma Cademi.
+        </div>
+      </div>
+      <!-- FAQ Item 2 -->
+      <div class="bg-zinc-950 border border-zinc-800 rounded-xl overflow-hidden">
+        <button onclick="toggleFaq(this)" class="w-full text-left px-6 py-5 flex items-center justify-between font-semibold text-white hover:text-brand-orange transition-colors">
+          <span>Qual é a duração do acesso?</span>
+          <span class="faq-icon text-brand-orange text-xl font-black">+</span>
+        </button>
+        <div class="faq-body hidden px-6 pb-5 text-zinc-400 leading-relaxed">
+          Acesso vitalício aos módulos gravados + 12 meses de aulas ao vivo e comunidade ativa.
+        </div>
+      </div>
+      <!-- FAQ Item 3 -->
+      <div class="bg-zinc-950 border border-zinc-800 rounded-xl overflow-hidden">
+        <button onclick="toggleFaq(this)" class="w-full text-left px-6 py-5 flex items-center justify-between font-semibold text-white hover:text-brand-orange transition-colors">
+          <span>Preciso de experiência com imóveis?</span>
+          <span class="faq-icon text-brand-orange text-xl font-black">+</span>
+        </button>
+        <div class="faq-body hidden px-6 pb-5 text-zinc-400 leading-relaxed">
+          Não. O método começa do zero e vai até portfólio avançado.
+        </div>
+      </div>
+      <!-- FAQ Item 4 -->
+      <div class="bg-zinc-950 border border-zinc-800 rounded-xl overflow-hidden">
+        <button onclick="toggleFaq(this)" class="w-full text-left px-6 py-5 flex items-center justify-between font-semibold text-white hover:text-brand-orange transition-colors">
+          <span>Posso parcelar?</span>
+          <span class="faq-icon text-brand-orange text-xl font-black">+</span>
+        </button>
+        <div class="faq-body hidden px-6 pb-5 text-zinc-400 leading-relaxed">
+          Sim, em até 12x de R$291 no cartão.
+        </div>
+      </div>
+      <!-- FAQ Item 5 -->
+      <div class="bg-zinc-950 border border-zinc-800 rounded-xl overflow-hidden">
+        <button onclick="toggleFaq(this)" class="w-full text-left px-6 py-5 flex items-center justify-between font-semibold text-white hover:text-brand-orange transition-colors">
+          <span>Como funciona a garantia de 7 dias?</span>
+          <span class="faq-icon text-brand-orange text-xl font-black">+</span>
+        </button>
+        <div class="faq-body hidden px-6 pb-5 text-zinc-400 leading-relaxed">
+          Se em 7 dias você não estiver satisfeito, basta enviar um email e devolvemos 100% do valor, sem perguntas.
+        </div>
+      </div>
+      <!-- FAQ Item 6 -->
+      <div class="bg-zinc-950 border border-zinc-800 rounded-xl overflow-hidden">
+        <button onclick="toggleFaq(this)" class="w-full text-left px-6 py-5 flex items-center justify-between font-semibold text-white hover:text-brand-orange transition-colors">
+          <span>O Arremata.ai já está incluído?</span>
+          <span class="faq-icon text-brand-orange text-xl font-black">+</span>
+        </button>
+        <div class="faq-body hidden px-6 pb-5 text-zinc-400 leading-relaxed">
+          Sim. 1 ano de acesso à plataforma de monitoramento de leilões está incluso.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA FINAL -->
+<section class="bg-gradient-to-t from-zinc-950 to-zinc-900 py-28 px-4">
+  <div class="max-w-3xl mx-auto text-center reveal">
+    <h2 class="text-4xl md:text-6xl font-black uppercase leading-tight mb-6">
+      DAQUI A 20 ANOS,<br>
+      VOCÊ QUER TER<br>
+      <span class="text-brand-orange">IMÓVEIS OU QUITAR ALUGUEL?</span>
+    </h2>
+    <p class="text-zinc-400 text-lg mb-12 max-w-2xl mx-auto leading-relaxed">
+      15 mil famílias já escolheram. O método está pronto. O que falta é a sua decisão.
+    </p>
+    <!-- Price box -->
+    <div class="inline-block bg-zinc-900 border border-brand-orange/30 rounded-2xl px-10 py-8 mb-8 glow-orange">
+      <div class="text-zinc-400 mb-2">De <s class="text-zinc-600">R$13.188</s> por</div>
+      <div class="text-brand-orange font-black text-5xl">R$3.497</div>
+    </div>
+    <div class="flex flex-col items-center gap-4">
+      <a href="#" class="inline-block bg-brand-orange hover:bg-orange-600 text-white font-black text-2xl px-14 py-6 rounded-xl glow-orange transition-all duration-200 hover:scale-105 uppercase tracking-wide">
+        ENTRAR NA COMUNIDADE →
+      </a>
+      <p class="text-zinc-500 text-sm">🔒 Garantia de 7 dias · Acesso imediato · 12x de R$291</p>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="bg-zinc-950 border-t border-zinc-800 py-10 px-4">
+  <div class="max-w-4xl mx-auto text-center">
+    <p class="text-zinc-500 text-sm mb-2">© 2026 Anthony Miranda · Yes Consórcios · Todos os direitos reservados</p>
+    <p class="text-zinc-600 text-xs">Produto educacional. Resultados dependem da aplicação individual do método.</p>
+  </div>
+</footer>
+
+<script>
+  // FAQ Accordion
+  function toggleFaq(btn) {
+    const body = btn.nextElementSibling;
+    const icon = btn.querySelector('.faq-icon');
+    const isOpen = !body.classList.contains('hidden');
+    document.querySelectorAll('.faq-body').forEach(b => b.classList.add('hidden'));
+    document.querySelectorAll('.faq-icon').forEach(i => i.textContent = '+');
+    if (!isOpen) { body.classList.remove('hidden'); icon.textContent = '−'; }
+  }
+
+  // Scroll reveal with IntersectionObserver
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
